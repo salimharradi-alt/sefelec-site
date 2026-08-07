@@ -1,0 +1,115 @@
+# ============================================================
+#  SEFELEC — Configuration serveur (Apache / LiteSpeed)
+#  À placer à la racine de public_html sur Nindohost.
+# ============================================================
+
+# ------------------------------------------------------------
+#  1. Forcer HTTPS
+#     Nindohost fournit un certificat SSL gratuit : on redirige
+#     tout le trafic non sécurisé vers https://
+# ------------------------------------------------------------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Version unique du domaine (évite le contenu dupliqué pour le SEO).
+  # Décommentez la variante correspondant à votre choix :
+  #
+  # Avec www :
+  # RewriteCond %{HTTP_HOST} ^sefelec\.ma$ [NC]
+  # RewriteRule ^ https://www.sefelec.ma%{REQUEST_URI} [L,R=301]
+  #
+  # Sans www :
+  # RewriteCond %{HTTP_HOST} ^www\.sefelec\.ma$ [NC]
+  # RewriteRule ^ https://sefelec.ma%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# ------------------------------------------------------------
+#  2. Page d'accueil
+# ------------------------------------------------------------
+DirectoryIndex index.html
+
+# Ne pas lister le contenu des dossiers sans index
+Options -Indexes
+
+# ------------------------------------------------------------
+#  3. Compression
+#     Réduit fortement le poids transféré. Les images WebP sont
+#     déjà compressées : inutile de les recompresser.
+# ------------------------------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# ------------------------------------------------------------
+#  4. Mise en cache navigateur
+#     Le HTML et le contenu ne sont pas mis en cache, pour qu'une
+#     mise à jour publiée soit visible immédiatement.
+# ------------------------------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  ExpiresByType text/html                 "access plus 0 seconds"
+  ExpiresByType application/json          "access plus 0 seconds"
+
+  ExpiresByType text/css                  "access plus 7 days"
+  ExpiresByType application/javascript    "access plus 7 days"
+
+  ExpiresByType image/webp                "access plus 1 month"
+  ExpiresByType image/png                 "access plus 1 month"
+  ExpiresByType image/jpeg                "access plus 1 month"
+  ExpiresByType image/svg+xml             "access plus 1 month"
+</IfModule>
+
+<IfModule mod_headers.c>
+  # content.json doit toujours être rechargé : c'est lui qui porte
+  # le contenu du site après chaque mise à jour.
+  <FilesMatch "content\.json$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+
+  # ----------------------------------------------------------
+  #  5. En-têtes de sécurité
+  # ----------------------------------------------------------
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+
+  # Masque la version du serveur
+  Header unset X-Powered-By
+</IfModule>
+
+# ------------------------------------------------------------
+#  6. Protection des fichiers sensibles
+#     Ces fichiers ne devraient jamais être transférés en ligne
+#     (le déploiement les exclut déjà), mais on bloque par sécurité.
+# ------------------------------------------------------------
+<FilesMatch "^\.env|\.db$|\.sqlite$|package(-lock)?\.json$|\.mjs$|\.md$|\.cmd$">
+  Require all denied
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # Bloque tout accès au back-office et aux outils, s'ils avaient
+  # été transférés par erreur.
+  RewriteRule ^(cms|tools|node_modules|\.github)/ - [F,L]
+</IfModule>
+
+# ------------------------------------------------------------
+#  7. Type MIME pour WebP
+#     Certains serveurs anciens ne le connaissent pas.
+# ------------------------------------------------------------
+<IfModule mod_mime.c>
+  AddType image/webp .webp
+</IfModule>
+
+# ------------------------------------------------------------
+#  8. Page d'erreur
+# ------------------------------------------------------------
+ErrorDocument 404 /index.html

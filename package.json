@@ -1,0 +1,10 @@
+{
+  "name": "sefelec-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site vitrine SEFELEC S.A.R.L. — électricité industrielle MT/BT, automatisme, tableaux et armoires électriques",
+  "scripts": {
+    "build": "cd cms && node scripts/build-static.mjs",
+    "dev": "node server.js"
+  }
+}

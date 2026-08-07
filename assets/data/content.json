@@ -1,0 +1,353 @@
+{
+  "generatedAt": "2026-08-07T19:05:58.824Z",
+  "settings": {
+    "id": "692fc7e7-c2a4-4328-bd1d-3ebe1b3d0661",
+    "site_name": "SEFELEC S.A.R.L.",
+    "tagline": "Travaux d'électricité & armoires électriques",
+    "logo": "33723e70-acd2-49bd-963e-ec73cbfe7c22",
+    "favicon": "4cf81ee4-6dff-45a5-bafa-2b3d21f850d2",
+    "phone_1": "06 65 84 18 07",
+    "phone_2": "06 61 95 70 77",
+    "whatsapp": "212705638780",
+    "email": "contact@sefelec.ma",
+    "address": "Hay Sâada Rue 27 N°14, Sidi Bernoussi, Casablanca, Maroc",
+    "opening_hours": null,
+    "map_embed": "https://www.google.com/maps?q=Hay+Sa%C3%A2da+Rue+27+N%C2%B014+Sidi+Bernoussi+Casablanca+Maroc&output=embed",
+    "facebook": null,
+    "instagram": null,
+    "linkedin": null,
+    "color_primary": "#1E3A8A",
+    "color_accent": "#E53935",
+    "currency": "MAD",
+    "shipping_flat": 50,
+    "shipping_free_threshold": 1000
+  },
+  "categories": {
+    "disjoncteurs": "Disjoncteurs",
+    "cables": "Câbles & conducteurs",
+    "appareillage": "Appareillage",
+    "tableaux": "Tableaux & coffrets",
+    "connectique": "Connectique"
+  },
+  "products": [
+    {
+      "id": "c5a54c87-68dc-4c10-bc09-fc4913ee2dc6",
+      "name": "Disjoncteur modulaire 20A courbe C",
+      "ref": "DJ-C20-1P",
+      "desc": "Disjoncteur unipolaire modulaire pour la protection des circuits terminaux contre les surcharges et court-circuits.",
+      "price": 85,
+      "basePrice": 85,
+      "hasPromo": false,
+      "stock": 0,
+      "image": "assets/images/content/306e212e-1481-4519-b4a1-36de5f4e17a1-carte.webp",
+      "imageLarge": "assets/images/content/306e212e-1481-4519-b4a1-36de5f4e17a1-large.webp",
+      "category": "disjoncteurs",
+      "categoryName": "Disjoncteurs",
+      "specs": {
+        "Courant nominal (In)": "20 A",
+        "Courbe de déclenchement": "C (5-10 In)",
+        "Tension assignée": "230/400 V AC",
+        "Pouvoir de coupure": "6 kA",
+        "Nombre de pôles": "1P",
+        "Norme": "NF EN 60898-1",
+        "Fixation": "Rail DIN 35 mm",
+        "Poids": "0.15 kg"
+      },
+      "isFeatured": false,
+      "isPopular": false,
+      "isPromo": false
+    },
+    {
+      "id": "fe4d3afe-442c-49bd-81a7-556cad009fa6",
+      "name": "Câble rigide H07V-U 2.5 mm²",
+      "ref": "CBL-H07VU-2.5",
+      "desc": "Conducteur rigide en cuivre pour installations fixes en habitat individuel et tertiaire.",
+      "price": 420,
+      "basePrice": 420,
+      "hasPromo": false,
+      "stock": 0,
+      "image": "assets/images/content/e6078a47-f895-474d-bf71-4d0da25107a0-carte.webp",
+      "imageLarge": "assets/images/content/e6078a47-f895-474d-bf71-4d0da25107a0-large.webp",
+      "category": "cables",
+      "categoryName": "Câbles & conducteurs",
+      "specs": {
+        "Section": "2.5 mm²",
+        "Matériau conducteur": "Cuivre recuit",
+        "Isolant": "PVC",
+        "Tension assignée": "450/750 V",
+        "Température de service": "-15°C à +70°C",
+        "Norme": "NF C 32-201",
+        "Couleurs disponibles": "Bleu, marron, vert/jaune",
+        "Conditionnement": "Couronne 100 m"
+      },
+      "isFeatured": false,
+      "isPopular": false,
+      "isPromo": false
+    },
+    {
+      "id": "45a9d3d3-e10a-4583-904a-69631aebbf75",
+      "name": "Disjoncteur différentiel 30 mA type AC",
+      "ref": "DJ-DIFF-30MA",
+      "desc": "Protection différentielle contre les contacts indirects, adaptée aux circuits prises et éclairage.",
+      "price": 145,
+      "basePrice": 145,
+      "hasPromo": false,
+      "stock": 0,
+      "image": "assets/images/content/4e5395f8-daee-4f39-8aee-46d71194a09d-carte.webp",
+      "imageLarge": "assets/images/content/4e5395f8-daee-4f39-8aee-46d71194a09d-large.webp",
+      "category": "disjoncteurs",
+      "categoryName": "Disjoncteurs",
+      "specs": {
+        "Courant nominal (In)": "40 A",
+        "Sensibilité différentielle": "30 mA",
+        "Type": "AC",
+        "Tension assignée": "230 V AC",
+        "Nombre de pôles": "2P",
+        "Norme": "NF EN 61008-1",
+        "Fixation": "Rail DIN 35 mm",
+        "Poids": "0.22 kg"
+      },
+      "isFeatured": false,
+      "isPopular": false,
+      "isPromo": false
+    },
+    {
+      "id": "69c91fe1-372f-4a96-911d-f0982f93fdd8",
+      "name": "Câble industriel blindé RO2V 5G6 mm²",
+      "ref": "CBL-RO2V-5G6",
+      "desc": "Câble énergie souple pour environnements industriels exigeants, forte tenue mécanique.",
+      "price": 2450,
+      "basePrice": 2450,
+      "hasPromo": false,
+      "stock": 0,
+      "image": "assets/images/content/80265f67-d2f3-4f1f-814a-4b083cb017c9-carte.webp",
+      "imageLarge": "assets/images/content/80265f67-d2f3-4f1f-814a-4b083cb017c9-large.webp",
+      "category": "cables",
+      "categoryName": "Câbles & conducteurs",
+      "specs": {
+        "Section": "5 x 6 mm²",
+        "Matériau conducteur": "Cuivre souple classe 5",
+        "Gaine": "PVC renforcé",
+        "Tension assignée": "0.6/1 kV",
+        "Indice de protection": "IP54 (installation)",
+        "Norme": "NF C 32-321",
+        "Résistance": "Anti-UV, anti-abrasion",
+        "Conditionnement": "Touret 500 m"
+      },
+      "isFeatured": false,
+      "isPopular": false,
+      "isPromo": false
+    },
+    {
+      "id": "a3687b6e-b8ae-46eb-a641-0c54fbeee9b2",
+      "name": "Prise murale 16A 2P+T",
+      "ref": "PR-16A-2P+T",
+      "desc": "Prise de courant à obturateurs pour installations résidentielles et tertiaires.",
+      "price": 35,
+      "basePrice": 35,
+      "hasPromo": false,
+      "stock": 0,
+      "image": "assets/images/content/1f487580-cd81-4d67-aaa1-0611ba02eebf-carte.webp",
+      "imageLarge": "assets/images/content/1f487580-cd81-4d67-aaa1-0611ba02eebf-large.webp",
+      "category": "appareillage",
+      "categoryName": "Appareillage",
+      "specs": {
+        "Courant nominal": "16 A",
+        "Tension assignée": "250 V AC",
+        "Configuration": "2P+T",
+        "Indice de protection": "IP20",
+        "Norme": "NF C 61-314",
+        "Fixation": "Boîte encastrée 67/68 mm",
+        "Coloris": "Blanc, anthracite",
+        "Poids": "0.08 kg"
+      },
+      "isFeatured": false,
+      "isPopular": false,
+      "isPromo": false
+    },
+    {
+      "id": "20aa523d-ad19-4e0c-816d-653551917cb8",
+      "name": "Interrupteur va-et-vient 10AX",
+      "ref": "INT-VV-10AX",
+      "desc": "Interrupteur pour commande d'éclairage à deux points, montage encastré.",
+      "price": 28,
+      "basePrice": 28,
+      "hasPromo": false,
+      "stock": 0,
+      "image": "assets/images/content/460f586b-700d-4609-8de0-3e8c6a877b9b-carte.webp",
+      "imageLarge": "assets/images/content/460f586b-700d-4609-8de0-3e8c6a877b9b-large.webp",
+      "category": "appareillage",
+      "categoryName": "Appareillage",
+      "specs": {
+        "Courant nominal": "10 AX",
+        "Tension assignée": "250 V AC",
+        "Type": "Va-et-vient",
+        "Indice de protection": "IP20",
+        "Norme": "NF C 61-410",
+        "Fixation": "Boîte encastrée 67/68 mm",
+        "Coloris": "Blanc, anthracite",
+        "Poids": "0.06 kg"
+      },
+      "isFeatured": false,
+      "isPopular": false,
+      "isPromo": false
+    },
+    {
+      "id": "fe0e42a4-116e-4908-bc74-f4830e117272",
+      "name": "Coffret électrique 13 modules",
+      "ref": "CFR-13M-1R",
+      "desc": "Coffret de distribution monorangée pour petites installations résidentielles.",
+      "price": 320,
+      "basePrice": 320,
+      "hasPromo": false,
+      "stock": 0,
+      "image": "assets/images/content/b1917c52-f98f-49f8-b3c3-38d7067af99a-carte.webp",
+      "imageLarge": "assets/images/content/b1917c52-f98f-49f8-b3c3-38d7067af99a-large.webp",
+      "category": "tableaux",
+      "categoryName": "Tableaux & coffrets",
+      "specs": {
+        "Nombre de modules": "13 (1 rangée)",
+        "Indice de protection": "IP30 / IK07",
+        "Matériau": "Polycarbonate auto-extinguible",
+        "Tension assignée": "400 V AC",
+        "Norme": "NF EN 61439-3",
+        "Fixation": "Saillie ou encastrée",
+        "Coloris": "Blanc RAL 9003",
+        "Poids": "1.1 kg"
+      },
+      "isFeatured": false,
+      "isPopular": false,
+      "isPromo": false
+    },
+    {
+      "id": "13e721a9-2651-4d52-93dc-fb4a13b771ee",
+      "name": "Armoire de distribution industrielle 72 modules",
+      "ref": "ARM-DIST-72M",
+      "desc": "Armoire modulaire pour distribution basse tension en environnement industriel.",
+      "price": 6800,
+      "basePrice": 6800,
+      "hasPromo": false,
+      "stock": 0,
+      "image": "assets/images/content/96623128-46fb-4981-a17d-4bd5da3a10d8-carte.webp",
+      "imageLarge": "assets/images/content/96623128-46fb-4981-a17d-4bd5da3a10d8-large.webp",
+      "category": "tableaux",
+      "categoryName": "Tableaux & coffrets",
+      "specs": {
+        "Nombre de modules": "72 (4 rangées)",
+        "Indice de protection": "IP54 / IK10",
+        "Matériau": "Tôle acier traitée",
+        "Tension assignée": "690 V AC",
+        "Norme": "NF EN 61439-1/2",
+        "Fixation": "Sur socle",
+        "Coloris": "Gris RAL 7035",
+        "Poids": "38 kg"
+      },
+      "isFeatured": false,
+      "isPopular": false,
+      "isPromo": false
+    },
+    {
+      "id": "220fc5d9-22a1-464d-ad16-0556a65aca81",
+      "name": "Connecteur étanche IP67 3 pôles",
+      "ref": "CNX-IP67-3P",
+      "desc": "Connecteur industriel étanche pour raccordement extérieur ou en milieu humide.",
+      "price": 180,
+      "basePrice": 180,
+      "hasPromo": false,
+      "stock": 0,
+      "image": "assets/images/content/39bd9e73-3d62-4a6f-9f86-e1b255767062-carte.webp",
+      "imageLarge": "assets/images/content/39bd9e73-3d62-4a6f-9f86-e1b255767062-large.webp",
+      "category": "connectique",
+      "categoryName": "Connectique",
+      "specs": {
+        "Indice de protection": "IP67",
+        "Nombre de pôles": "3P+T",
+        "Courant nominal": "32 A",
+        "Tension assignée": "400 V AC",
+        "Norme": "CEI 60309",
+        "Matériau": "Polyamide renforcé",
+        "Température de service": "-25°C à +80°C",
+        "Poids": "0.18 kg"
+      },
+      "isFeatured": false,
+      "isPopular": false,
+      "isPromo": false
+    }
+  ],
+  "services": [
+    {
+      "id": "f0fb40fe-dc40-4f9a-ac8f-9c482d038ed6",
+      "name": "Électricité MT/BT",
+      "description": "Étude et réalisation de vos installations électriques moyenne et basse tension.",
+      "icon_svg": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><path d=\"M13 2L4 14H11L9 22L20 8H12L13 2Z\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/></svg>"
+    },
+    {
+      "id": "ec465821-d164-4e7f-bbf8-47fe48bb9687",
+      "name": "Automatisme Industriel",
+      "description": "Conception et intégration de solutions automatisées pour vos process de production.",
+      "icon_svg": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"1.6\"/><circle cx=\"12\" cy=\"12\" r=\"3\" stroke=\"currentColor\" stroke-width=\"1.6\"/><path d=\"M12 4V2M12 22V20M4 12H2M22 12H20\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\"/></svg>"
+    },
+    {
+      "id": "07de1254-1705-4113-be6f-d45fd6b150c1",
+      "name": "Tableaux Électriques",
+      "description": "Conception, câblage et mise en service de tableaux électriques industriels.",
+      "icon_svg": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"2\" stroke=\"currentColor\" stroke-width=\"1.6\"/><path d=\"M8 8H16V16H8V8Z\" stroke=\"currentColor\" stroke-width=\"1.6\"/></svg>"
+    },
+    {
+      "id": "753c1a85-b5b6-4a69-86ba-bac84cdbbc30",
+      "name": "Armoires Électriques",
+      "description": "Montage d'armoires électriques sur mesure, fiables et conformes.",
+      "icon_svg": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><rect x=\"5\" y=\"3\" width=\"14\" height=\"18\" rx=\"2\" stroke=\"currentColor\" stroke-width=\"1.6\"/><path d=\"M9 8H15M9 12H15M9 16H12\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\"/></svg>"
+    },
+    {
+      "id": "ae95bf37-ec54-4f35-aa2b-92ef305f39a0",
+      "name": "Installation Électrique Industrielle",
+      "description": "Réalisation complète de vos installations électriques en environnement industriel.",
+      "icon_svg": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><path d=\"M4 12H8L10 6L14 18L16 12H20\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>"
+    },
+    {
+      "id": "046f1d47-8b81-4748-8a33-dab5eab102c4",
+      "name": "Maintenance Électrique",
+      "description": "Contrats de maintenance préventive et corrective pour vos installations.",
+      "icon_svg": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><path d=\"M14.7 6.3a1 1 0 0 0 1.4 1.4l3.6-3.6a5 5 0 0 1-6.7 6.7l-6.5 6.5a2 2 0 1 1-2.8-2.8l6.5-6.5a5 5 0 0 1 6.7-6.7l-3.6 3.6a1 1 0 0 0 1.4 1.4\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/></svg>"
+    },
+    {
+      "id": "ae583d42-bdc9-47bd-887d-c923d06c580e",
+      "name": "Dépannage Électrique",
+      "description": "Intervention rapide en cas de panne pour limiter l'impact sur votre activité.",
+      "icon_svg": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><path d=\"M12 9V13M12 17H12.01M10.3 3.9L2.5 17A2 2 0 0 0 4.2 20H19.8A2 2 0 0 0 21.5 17L13.7 3.9A2 2 0 0 0 10.3 3.9Z\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/></svg>"
+    },
+    {
+      "id": "333b9182-5ca1-401b-a5c2-823c64f74eee",
+      "name": "Mise en Conformité",
+      "description": "Diagnostic et mise en conformité de vos installations électriques existantes.",
+      "icon_svg": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><path d=\"M9 12L11 14L15.5 9.5\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M12 2L4 6V12C4 17 7.5 21.4 12 22C16.5 21.4 20 17 20 12V6L12 2Z\" stroke=\"currentColor\" stroke-width=\"1.6\"/></svg>"
+    }
+  ],
+  "testimonials": [
+    {
+      "id": "1e43af43-dad6-4d0b-80e8-f881e7458b32",
+      "name": "Karim B.",
+      "role": "Directeur technique, industrie agroalimentaire",
+      "quote": "SEFELEC a réalisé notre tableau électrique dans les délais annoncés, avec un vrai souci du détail. Une équipe sérieuse et réactive.",
+      "rating": 5,
+      "photo": null
+    },
+    {
+      "id": "b9a0d8c6-5dec-40b6-bde7-961aac2f4e90",
+      "name": "Sanae L.",
+      "role": "Responsable maintenance, site logistique",
+      "quote": "Intervention rapide lors de notre panne électrique en pleine nuit. On sent une vraie expertise technique chez SEFELEC.",
+      "rating": 5,
+      "photo": null
+    },
+    {
+      "id": "2167a810-89db-4245-bd7b-231731eb28f1",
+      "name": "Youssef T.",
+      "role": "Gérant, atelier de production",
+      "quote": "Un accompagnement personnalisé du début à la fin du projet d'armoire électrique. Je recommande sans hésiter.",
+      "rating": 4,
+      "photo": null
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+# ============================================================
+#  SEFELEC — fichiers exclus du dépôt Git
+# ============================================================
+
+# --- Secrets : ne doivent JAMAIS être publiés ---------------
+cms/.env
+cms/.env.*
+!cms/.env.example
+
+# --- Base de données et fichiers téléversés -----------------
+# Le contenu du site est exporté dans assets/data/content.json,
+# qui est versionné et sert de sauvegarde lisible.
+cms/data.db
+cms/data.db.backup-*
+cms/uploads/
+
+# --- Dépendances et runtimes (réinstallables) ---------------
+node_modules/
+tools/
+
+# --- Fichiers volumineux ------------------------------------
+*.mp4
+*.zip
+*.rar
+*.7z
+
+# --- Captures contenant des identifiants --------------------
+*login*.png
+*identifiants*
+*credentials*
+
+# --- Système et éditeurs ------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+npm-debug.log*
+.vscode/
+.idea/
+
+# --- Outils locaux ------------------------------------------
+.claude/

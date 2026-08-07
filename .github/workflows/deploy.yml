@@ -1,0 +1,81 @@
+# ============================================================
+#  SEFELEC — Publication automatique sur Nindohost
+# ============================================================
+# Se déclenche à chaque « git push » sur la branche principale et
+# envoie le site public par FTP vers l'hébergement.
+#
+# Seuls les fichiers du site partent en ligne. Le back-office (cms/),
+# les outils (tools/) et la base de données restent sur votre machine.
+#
+# Secrets à créer dans GitHub (Settings → Secrets and variables → Actions) :
+#   FTP_SERVER    — ex. ftp.sefelec.ma
+#   FTP_USERNAME  — identifiant FTP cPanel
+#   FTP_PASSWORD  — mot de passe FTP
+#   FTP_DIRECTORY — dossier cible, généralement public_html/
+
+name: Déploiement Nindohost
+
+on:
+  push:
+    branches: [main]
+  # Permet aussi de relancer une publication manuellement
+  # depuis l'onglet Actions de GitHub.
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Publier sur l'hébergement
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      - name: Contrôler que le contenu a bien été généré
+        run: |
+          if [ ! -f assets/data/content.json ]; then
+            echo "::error::assets/data/content.json est absent."
+            echo "Lancez 'npm run build' en local, puis committez le résultat."
+            exit 1
+          fi
+
+          produits=$(grep -o '"ref"' assets/data/content.json | wc -l)
+          images=$(ls assets/images/content 2>/dev/null | wc -l)
+
+          echo "Contenu : $produits produits, $images images"
+
+          if [ "$images" -eq 0 ]; then
+            echo "::warning::Aucune image générée. Le site s'affichera sans visuels produits."
+          fi
+
+      - name: Envoyer les fichiers par FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ secrets.FTP_DIRECTORY }}
+          protocol: ftps
+          # Tout ce qui ne fait pas partie du site public est exclu.
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            cms/**
+            tools/**
+            .github/**
+            server.js
+            package.json
+            package-lock.json
+            demarrer.cmd
+            **/*.md
+            **/*.mp4
+            **/*.zip
+            **/*.pdf
+
+      - name: Récapitulatif
+        run: |
+          echo "### Publication terminée :rocket:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Le site a été transféré vers l'hébergement." >> $GITHUB_STEP_SUMMARY
+          echo "Vérifiez le résultat sur votre domaine." >> $GITHUB_STEP_SUMMARY
