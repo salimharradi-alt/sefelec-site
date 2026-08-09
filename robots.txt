@@ -1,0 +1,16 @@
+# ============================================================
+#  SEFELEC S.A.R.L. — robots.txt
+#  Si votre domaine diffère, remplacez-le dans la ligne Sitemap.
+# ============================================================
+
+# Tous les moteurs (Google, Bing, Yahoo, DuckDuckGo, Qwant…)
+User-agent: *
+Allow: /
+
+# Dossiers techniques : aucun intérêt pour l'indexation.
+# Ils ne sont normalement pas mis en ligne, mais on le précise.
+Disallow: /cms/
+Disallow: /tools/
+Disallow: /.github/
+
+Sitemap: https://www.sefelec.ma/sitemap.xml

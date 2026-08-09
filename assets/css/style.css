@@ -424,7 +424,7 @@ img.testimonial-avatar { object-fit: cover; }
   color: #fff;
 }
 .about-card svg { margin-bottom: 12px; }
-.about-card h4 { color: #fff; margin-bottom: 6px; font-size: 1.05rem; }
+.about-card h3 { color: #fff; margin-bottom: 6px; font-size: 1.05rem; }
 .about-card p { color: rgba(255,255,255,0.85); font-size: 0.88rem; margin: 0; }
 .card-navy { background: linear-gradient(135deg, var(--navy), var(--navy-dark)); top: 0; left: 0; }
 .card-red { background: linear-gradient(135deg, var(--red), var(--red-dark)); }
@@ -1071,6 +1071,28 @@ img.testimonial-avatar { object-fit: cover; }
   .footer-inner { grid-template-columns: 1fr 1fr; }
 }
 
+/* Les enfants d'une grille CSS ont min-width:auto par défaut : ils refusent
+   de descendre sous la largeur intrinsèque de leur contenu, ce qui provoque
+   un débordement sur les petits écrans. min-width:0 rétablit la compression. */
+.contact-grid > *,
+.about-grid > *,
+.hero-inner > *,
+.footer-inner > *,
+.catalog-grid > *,
+.services-grid > *,
+.why-grid > *,
+.testimonials-grid > * {
+  min-width: 0;
+}
+
+/* Les adresses et références longues ne doivent pas élargir la page. */
+.info-item span,
+.catalog-ref,
+.footer-col span,
+.footer-col a {
+  overflow-wrap: anywhere;
+}
+
 @media (max-width: 760px) {
   .logo-img { width: 38px; height: 38px; }
   .services-grid { grid-template-columns: 1fr; }
@@ -1083,4 +1105,19 @@ img.testimonial-avatar { object-fit: cover; }
   .floating-buttons { right: 16px; bottom: 16px; }
   .back-to-top { right: 16px; bottom: 140px; }
   .modal-box { padding: 26px; }
+}
+
+/* Très petits téléphones (iPhone SE, anciens Android).
+   L'en-tête manque de place : on resserre les marges et le logo. */
+@media (max-width: 400px) {
+  .container { padding: 0 16px; }
+  .header-inner { gap: 10px; }
+  .logo { font-size: 0.95rem; }
+  .logo-img { width: 34px; height: 34px; }
+  .cart-toggle { width: 36px; height: 36px; }
+  .contact-form { padding: 22px 18px; }
+  .modal-box { padding: 20px; }
+  .cart-panel-header,
+  .cart-panel-body,
+  .cart-panel-footer { padding-left: 16px; padding-right: 16px; }
 }

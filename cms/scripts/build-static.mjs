@@ -26,6 +26,13 @@ const DATA_DIR = path.join(SITE_ROOT, 'assets', 'data');
 const IMG_DIR = path.join(SITE_ROOT, 'assets', 'images', 'content');
 const BASE = 'http://localhost:5500';
 
+/**
+ * Adresse publique du site — utilisée pour générer le sitemap.
+ * ⚠️ À adapter si votre domaine est différent. Pensez alors à modifier
+ * aussi robots.txt et les balises canonical/Open Graph d'index.html.
+ */
+const SITE_URL = 'https://www.sefelec.ma';
+
 /** Formats générés pour chaque image, alignés sur les usages du site. */
 const PRESETS = { carte: 'carte', large: 'large', miniature: 'miniature' };
 
@@ -172,12 +179,30 @@ async function main() {
   const out = path.join(DATA_DIR, 'content.json');
   fs.writeFileSync(out, JSON.stringify(content, null, 2), 'utf8');
 
+  // --- Sitemap ---
+  // Le site tient en une page ; les sections sont des ancres, que les
+  // moteurs découvrent seuls. On déclare donc l'URL principale, avec la
+  // date réelle de la dernière génération de contenu.
+  const today = new Date().toISOString().slice(0, 10);
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>${SITE_URL}/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
+`;
+  fs.writeFileSync(path.join(SITE_ROOT, 'sitemap.xml'), sitemap, 'utf8');
+
   const images = fs.readdirSync(IMG_DIR).filter((f) => f.endsWith('.webp'));
   const weight = images.reduce((sum, f) => sum + fs.statSync(path.join(IMG_DIR, f)).size, 0);
 
   console.log('\n✓ Génération terminée');
   console.log(`  assets/data/content.json      ${(fs.statSync(out).size / 1024).toFixed(1)} Ko`);
   console.log(`  assets/images/content/        ${images.length} fichiers, ${(weight / 1024).toFixed(0)} Ko`);
+  console.log(`  sitemap.xml                   ${SITE_URL}/`);
   console.log('\nLe site est prêt à être publié : git add . && git commit && git push');
 }
 

@@ -111,5 +111,7 @@ Options -Indexes
 
 # ------------------------------------------------------------
 #  8. Page d'erreur
+#     On sert une vraie page 404 : rediriger vers l'accueil
+#     produirait un « soft 404 », pénalisé par les moteurs.
 # ------------------------------------------------------------
-ErrorDocument 404 /index.html
+ErrorDocument 404 /404.html

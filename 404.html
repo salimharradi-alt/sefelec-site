@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page introuvable — SEFELEC S.A.R.L.</title>
+<!-- Une page d'erreur ne doit jamais être indexée. -->
+<meta name="robots" content="noindex, follow">
+<link rel="icon" href="/assets/images/favicon.png" type="image/png">
+<link rel="stylesheet" href="/assets/css/style.css">
+<style>
+  .error-page {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 24px;
+  }
+  .error-code {
+    font-size: clamp(4rem, 12vw, 7rem);
+    font-weight: 800;
+    line-height: 1;
+    color: var(--navy);
+    margin: 0;
+  }
+  .error-page h1 { margin: 12px 0 16px; font-size: clamp(1.4rem, 3vw, 2rem); }
+  .error-page p { max-width: 480px; margin: 0 auto 28px; }
+  .error-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="logo">
+      <img src="/assets/images/logo-icon.png" alt="SEFELEC S.A.R.L." class="logo-img" width="44" height="44">
+      <span class="logo-text">SEFELEC<span class="accent"> S.A.R.L.</span></span>
+    </a>
+  </div>
+</header>
+
+<main class="error-page">
+  <div>
+    <p class="error-code">404</p>
+    <h1>Cette page n'existe pas</h1>
+    <p>
+      Le lien que vous avez suivi est peut-être obsolète, ou l'adresse
+      comporte une erreur de saisie.
+    </p>
+    <div class="error-actions">
+      <a href="/" class="btn btn-primary">Retour à l'accueil</a>
+      <a href="/#contact" class="btn btn-outline">Nous contacter</a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-bottom">
+    <div class="container">
+      <p>&copy; <span id="year"></span> SEFELEC S.A.R.L. Tous droits réservés.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

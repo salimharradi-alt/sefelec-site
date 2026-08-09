@@ -85,7 +85,9 @@ function renderCatalog(filter) {
     <article class="catalog-card" data-id="${p.id}">
       <div class="catalog-photo">
         ${p.image
-          ? `<img src="${p.image}" alt="${escapeHtml(p.name)}" loading="lazy">`
+          // width/height réservent la place avant chargement : évite que la
+          // page « saute » (pénalisé par Google — Cumulative Layout Shift).
+          ? `<img src="${p.image}" alt="${escapeHtml(p.name)} — SEFELEC" loading="lazy" decoding="async" width="600" height="450">`
           : `<div class="catalog-photo-empty" aria-hidden="true">
                <svg viewBox="0 0 24 24" width="42" height="42" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3 15l4.5-4.5 3.5 3.5 3-3L21 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
              </div>`}
