@@ -18,8 +18,19 @@ import zlib from 'node:zlib';
 const SITE_ROOT = path.resolve('..');
 const OUT = path.join(SITE_ROOT, 'sefelec-a-televerser.zip');
 
-/** Contenu du site public : ces éléments seuls partent en ligne. */
-const INCLUDE = ['index.html', '.htaccess', 'assets'];
+/**
+ * Contenu du site public : ces éléments seuls partent en ligne.
+ * robots.txt et sitemap.xml sont indispensables au référencement —
+ * sans eux, Google ne peut ni vérifier le site ni recevoir le plan.
+ */
+const INCLUDE = [
+  'index.html',
+  '404.html',
+  '.htaccess',
+  'robots.txt',
+  'sitemap.xml',
+  'assets'
+];
 
 // ---------------------------------------------------------------------------
 // Écriture d'un ZIP minimal (format standard, sans dépendance externe)

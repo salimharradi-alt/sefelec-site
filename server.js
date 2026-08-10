@@ -53,7 +53,13 @@ const MIME = {
  * pas dans cette liste est relayé vers Directus.
  */
 const STATIC_PREFIXES = ['assets/'];
-const STATIC_FILES = new Set(['index.html', 'favicon.ico', 'robots.txt', 'sitemap.xml']);
+const STATIC_FILES = new Set([
+  'index.html',
+  '404.html',
+  'favicon.ico',
+  'robots.txt',
+  'sitemap.xml'
+]);
 
 function resolveStaticFile(pathname) {
   let rel;
