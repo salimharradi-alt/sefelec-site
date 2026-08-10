@@ -92,7 +92,7 @@ jobs:
             server.js
             package.json
             package-lock.json
-            demarrer.cmd
+            **/*.cmd
             **/*.md
             **/*.mp4
             **/*.zip
