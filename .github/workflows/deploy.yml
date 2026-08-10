@@ -17,7 +17,10 @@ name: Déploiement Nindohost
 
 on:
   push:
-    branches: [main]
+    # Selon la langue de votre compte, GitHub nomme la branche « main » ou
+    # « principal ». Les trois noms courants sont acceptés : la publication
+    # se déclenche quel que soit celui de votre dépôt.
+    branches: [main, principal, master]
   # Permet aussi de relancer une publication manuellement
   # depuis l'onglet Actions de GitHub.
   workflow_dispatch:
@@ -48,13 +51,35 @@ jobs:
             echo "::warning::Aucune image générée. Le site s'affichera sans visuels produits."
           fi
 
+      - name: Contrôler que les accès FTP sont renseignés
+        env:
+          SERVEUR: ${{ secrets.FTP_SERVER }}
+          UTILISATEUR: ${{ secrets.FTP_USERNAME }}
+          MOTDEPASSE: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          manquants=""
+          if [ -z "$SERVEUR" ];     then manquants="$manquants FTP_SERVER"; fi
+          if [ -z "$UTILISATEUR" ]; then manquants="$manquants FTP_USERNAME"; fi
+          if [ -z "$MOTDEPASSE" ];  then manquants="$manquants FTP_PASSWORD"; fi
+
+          if [ -n "$manquants" ]; then
+            echo "::error::Secrets manquants :$manquants"
+            echo "Créez-les dans Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+
+          echo "Accès FTP renseignés."
+
       - name: Envoyer les fichiers par FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ secrets.FTP_DIRECTORY }}
+          # Sans secret FTP_DIRECTORY, on vise public_html/ : c'est la racine
+          # du site sur la quasi-totalité des hébergements cPanel.
+          server-dir: ${{ secrets.FTP_DIRECTORY || 'public_html/' }}
+          # Si Nindohost refuse le FTPS, remplacez « ftps » par « ftp ».
           protocol: ftps
           # Tout ce qui ne fait pas partie du site public est exclu.
           exclude: |
