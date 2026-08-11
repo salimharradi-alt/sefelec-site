@@ -6,6 +6,8 @@
 cms/.env
 cms/.env.*
 !cms/.env.example
+# Modèles sans valeur sensible : ils ne contiennent que des explications.
+!cms/.env.production.example
 
 # --- Base de données et fichiers téléversés -----------------
 # Le contenu du site est exporté dans assets/data/content.json,
