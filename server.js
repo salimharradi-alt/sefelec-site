@@ -93,9 +93,11 @@ function serveStatic(absPath, res) {
   res.writeHead(200, {
     'Content-Type': MIME[ext] || 'application/octet-stream',
     'Content-Length': body.length,
-    // Le HTML n'est pas mis en cache pour que les modifications soient visibles
-    // immédiatement ; les assets le sont brièvement.
-    'Cache-Control': ext === '.html' ? 'no-cache' : 'public, max-age=300'
+    // Serveur de développement : rien n'est mis en cache. Une feuille de
+    // style ou un script servi depuis le cache donne l'illusion qu'une
+    // correction n'a pas fonctionné. La mise en cache réelle est gérée
+    // en ligne par .htaccess.
+    'Cache-Control': 'no-cache, no-store, must-revalidate'
   });
   res.end(body);
 }
@@ -152,9 +154,41 @@ const server = http.createServer((req, res) => {
     if (file) return serveStatic(file, res);
   }
 
-  // 2) Tout le reste (/admin, /auth, /items, /assets, /graphql…) → Directus
+  // 2) Formulaire de devis → simulation locale
+  //    En ligne, envoi-devis.php envoie le courriel. Ici, Node ne sait pas
+  //    interpréter PHP : on imite sa réponse et on affiche la demande dans
+  //    la console, pour que le parcours reste testable hors ligne.
+  if (req.method === 'POST' && pathname === '/envoi-devis.php') {
+    return simulerEnvoiDevis(req, res);
+  }
+
+  // 3) Tout le reste (/admin, /auth, /items, /assets, /graphql…) → Directus
   proxyToCms(req, res);
 });
+
+/** Reproduit le contrat de envoi-devis.php sans envoyer de courriel. */
+function simulerEnvoiDevis(req, res) {
+  let corps = '';
+  req.on('data', (morceau) => {
+    corps += morceau;
+    // Un envoi légitime ne dépasse jamais cette taille.
+    if (corps.length > 1e6) req.destroy();
+  });
+
+  req.on('end', () => {
+    // Les champs arrivent en multipart : on n'extrait que les valeurs
+    // lisibles, ce qui suffit à vérifier ce que le formulaire transmet.
+    const champs = [...corps.matchAll(/name="([^"]+)"\r?\n\r?\n([\s\S]*?)\r?\n--/g)]
+      .map(([, nom, valeur]) => `${nom} = ${valeur.trim() || '(vide)'}`);
+
+    console.log('\n  ── Demande de devis (simulation locale) ──');
+    champs.forEach((ligne) => console.log('     ' + ligne));
+    console.log('  ── En ligne, ceci partirait par courriel ──\n');
+
+    res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+    res.end(JSON.stringify({ ok: true }));
+  });
+}
 
 // Directus utilise les WebSockets (temps réel, collaboration).
 server.on('upgrade', (req, socket, head) => {

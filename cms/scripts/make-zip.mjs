@@ -29,6 +29,9 @@ const INCLUDE = [
   '.htaccess',
   'robots.txt',
   'sitemap.xml',
+  // Réception des demandes de devis : sans ce fichier, le formulaire
+  // renvoie une erreur au visiteur.
+  'envoi-devis.php',
   'assets'
 ];
 

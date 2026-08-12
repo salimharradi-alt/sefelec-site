@@ -292,32 +292,116 @@ function renderSettings() {
 }
 
 // ===========================================================================
-// Formulaire de devis → WhatsApp
+// Formulaire de devis
 // ===========================================================================
-const contactForm = document.getElementById('contactForm');
+// La demande part vers envoi-devis.php, qui la transmet par courriel à
+// l'entreprise. WhatsApp reste disponible pour le contact général, mais
+// n'intervient plus dans le parcours de devis : une demande doit laisser
+// une trace écrite exploitable, ce qu'une conversation ne garantit pas.
 
-contactForm.addEventListener('submit', (e) => {
+const contactForm = document.getElementById('contactForm');
+const contactSubmit = document.getElementById('contactSubmit');
+const formStatus = document.getElementById('formStatus');
+
+const ENDPOINT_DEVIS = 'envoi-devis.php';
+const LIBELLE_ENVOI = 'Envoyer ma demande de devis';
+
+function afficherStatut(etat, texte) {
+  formStatus.dataset.etat = etat;
+  formStatus.textContent = texte;
+  formStatus.hidden = false;
+}
+
+contactForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const number = SETTINGS.whatsapp || '212705638780';
-  const data = new FormData(contactForm);
-  const lines = [
-    'Demande de devis — SEFELEC',
-    `Nom : ${data.get('name') || ''}`,
-    data.get('company') ? `Entreprise : ${data.get('company')}` : null,
-    data.get('email') ? `Email : ${data.get('email')}` : null,
-    data.get('phone') ? `Téléphone : ${data.get('phone')}` : null,
-    `Projet : ${data.get('message') || ''}`
-  ].filter(Boolean);
+  contactSubmit.disabled = true;
+  contactSubmit.textContent = 'Envoi en cours…';
+  formStatus.hidden = true;
 
-  const text = encodeURIComponent(lines.join('\n'));
-  window.open(`https://wa.me/${number}?text=${text}`, '_blank');
-  contactForm.reset();
+  try {
+    const reponse = await fetch(ENDPOINT_DEVIS, {
+      method: 'POST',
+      body: new FormData(contactForm),
+      headers: { 'Accept': 'application/json' }
+    });
 
-  if (cartCheckoutPending) {
-    clearCart();
-    cartCheckoutPending = false;
+    // Une page d'erreur de l'hébergeur renverrait du HTML : sans ce
+    // garde-fou, l'analyse JSON échouerait avec un message incompréhensible.
+    let resultat = {};
+    try {
+      resultat = await reponse.json();
+    } catch {
+      throw new Error('Réponse inattendue du serveur.');
+    }
+
+    if (!reponse.ok || !resultat.ok) {
+      throw new Error(resultat.erreur || 'L\'envoi a échoué. Merci de réessayer.');
+    }
+
+    afficherStatut(
+      'succes',
+      'Merci, votre demande est bien reçue. Nous vous répondons sous 24 h ouvrées.'
+    );
+    contactForm.reset();
+
+    if (cartCheckoutPending) {
+      clearCart();
+      cartCheckoutPending = false;
+    }
+  } catch (erreur) {
+    afficherStatut('erreur', erreur.message);
+  } finally {
+    contactSubmit.disabled = false;
+    contactSubmit.textContent = LIBELLE_ENVOI;
   }
+});
+
+// Arrivée depuis un bouton « Demander un devis » : on place le curseur
+// dans le premier champ pour que la saisie commence sans clic
+// supplémentaire.
+//
+// Le focus doit attendre la FIN du défilement. Déclenché pendant
+// l'animation, il l'interrompt : le formulaire s'immobilisait alors à
+// mi-course, partiellement hors écran (constaté au test sur mobile).
+// Le défilement est piloté ici plutôt que laissé à l'ancre HTML : un
+// navigateur ignore un lien pointant vers l'ancre courante. Sans cela,
+// après une première demande, remonter puis recliquer « Demander un
+// devis » ne produisait plus rien (constaté au test).
+//
+// L'attribut href reste en place : sans JavaScript, le lien fonctionne
+// toujours de façon native.
+document.querySelectorAll('a[href="#contactForm"]').forEach((lien) => {
+  lien.addEventListener('click', (evenement) => {
+    const formulaire = document.getElementById('contactForm');
+    if (!formulaire) return;
+
+    evenement.preventDefault();
+    formulaire.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Sur écran tactile, on s'arrête là. Y placer le curseur ouvrirait
+    // le clavier virtuel, qui recouvre aussitôt le formulaire que le
+    // visiteur vient d'atteindre.
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+
+    // Le curseur ne se place qu'une fois le défilement terminé : appelé
+    // pendant l'animation, focus() peut l'interrompre.
+    let place = false;
+    const placerLeCurseur = () => {
+      if (place) return;
+      place = true;
+      window.removeEventListener('scrollend', placerLeCurseur);
+
+      const premier = document.getElementById('name');
+      if (premier) premier.focus({ preventScroll: true });
+    };
+
+    // « scrollend » n'existe pas encore sur Safari : le délai sert de
+    // repli, et le premier des deux qui survient l'emporte. Mesuré à
+    // 2,3 s pour un défilement pleine page — d'où cette marge.
+    window.addEventListener('scrollend', placerLeCurseur);
+    setTimeout(placerLeCurseur, 3000);
+  });
 });
 
 // ===========================================================================

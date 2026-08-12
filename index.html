@@ -106,7 +106,7 @@
       <svg viewBox="0 0 24 24" width="16" height="16" fill="none"><path d="M4 4C4 4 8 3 9 7C9.5 9 8 9.5 8 10.5C8 12.5 11.5 16 13.5 16C14.5 16 15 14.5 17 15C21 16 20 20 20 20C20 20 16 21 12 17C8 13 3 8 4 4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
       <span data-setting="phone_1">06 65 84 18 07</span>
     </a>
-    <a href="#contact" class="btn btn-primary header-cta">Demander un devis</a>
+    <a href="#contactForm" class="btn btn-primary header-cta">Demander un devis</a>
 
     <button class="cart-toggle" id="cartToggle" aria-label="Ouvrir le panier">
       <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M3 4H5L6.5 15.5C6.6 16.3 7.3 17 8.2 17H18C18.8 17 19.5 16.4 19.7 15.6L21.3 8.6C21.5 7.8 20.9 7 20.1 7H6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="20.5" r="1.4" fill="currentColor"/><circle cx="17.5" cy="20.5" r="1.4" fill="currentColor"/></svg>
@@ -127,7 +127,7 @@
     <a href="#temoignages">Témoignages</a>
     <a href="#contact">Contact</a>
     <a href="tel:+212665841807" data-setting-tel="phone_1" data-setting="phone_1" class="btn btn-outline">06 65 84 18 07</a>
-    <a href="#contact" class="btn btn-primary">Demander un devis</a>
+    <a href="#contactForm" class="btn btn-primary">Demander un devis</a>
   </div>
 </header>
 
@@ -140,7 +140,7 @@
       <h1>L'énergie de vos installations, <span class="accent">l'expertise SEFELEC.</span></h1>
       <p>Étude, réalisation et maintenance de vos installations électriques industrielles : automatisme, tableaux et armoires électriques conçus pour la performance et la sécurité.</p>
       <div class="hero-actions">
-        <a href="#contact" class="btn btn-primary">Demander un devis</a>
+        <a href="#contactForm" class="btn btn-primary">Demander un devis</a>
         <a href="#contact" class="btn btn-outline-light">Nous contacter</a>
       </div>
       <div class="hero-badges">
@@ -284,7 +284,7 @@
     <table class="spec-table" id="modalSpecs"></table>
     <div class="modal-actions">
       <button type="button" class="btn btn-primary" id="modalAddToCart">Ajouter au panier</button>
-      <a href="#contact" class="btn btn-outline" id="modalQuoteBtn">Demander un devis pour cette référence</a>
+      <a href="#contactForm" class="btn btn-outline" id="modalQuoteBtn">Demander un devis pour cette référence</a>
     </div>
   </div>
 </div>
@@ -377,7 +377,7 @@
   <div class="container cta-inner">
     <h2>Un projet électrique ? Parlons-en.</h2>
     <p>Nos équipes vous accompagnent dans l'étude et la réalisation de vos installations.</p>
-    <a href="#contact" class="btn btn-white">Demander un devis gratuit</a>
+    <a href="#contactForm" class="btn btn-white">Demander un devis gratuit</a>
   </div>
 </section>
 
@@ -437,8 +437,20 @@
         <label for="message">Votre projet</label>
         <textarea id="message" name="message" rows="5" placeholder="Décrivez votre besoin (type d'installation, délais, contraintes...)" required></textarea>
       </div>
-      <button type="submit" class="btn btn-primary btn-block">Envoyer ma demande de devis</button>
-      <p class="form-note">En envoyant ce formulaire, vous serez redirigé vers WhatsApp avec votre message pré-rempli.</p>
+      <!-- Piège à robots : masqué et hors du parcours clavier, un visiteur
+           ne peut pas le remplir. Toute valeur trahit un envoi automatisé. -->
+      <div class="form-piege" aria-hidden="true">
+        <label for="site_web">Ne remplissez pas ce champ</label>
+        <input type="text" id="site_web" name="site_web" tabindex="-1" autocomplete="off">
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block" id="contactSubmit">Envoyer ma demande de devis</button>
+
+      <!-- aria-live : les lecteurs d'écran annoncent le résultat sans
+           qu'il faille déplacer le focus. -->
+      <p class="form-status" id="formStatus" role="status" aria-live="polite" hidden></p>
+
+      <p class="form-note">Votre demande est transmise directement à nos équipes. Réponse sous 24 h ouvrées.</p>
     </form>
   </div>
 </section>

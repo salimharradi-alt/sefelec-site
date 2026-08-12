@@ -223,7 +223,11 @@ cartCheckout.addEventListener('click', () => {
 
   cartCheckoutPending = true;
   closeCart();
-  document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+
+  // Vise le formulaire et non le haut de la section : commander est une
+  // demande de devis comme une autre, elle doit aboutir au même endroit
+  // que les boutons « Demander un devis ».
+  document.getElementById('contactForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
 renderCart();

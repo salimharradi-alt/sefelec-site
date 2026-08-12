@@ -966,6 +966,47 @@ img.testimonial-avatar { object-fit: cover; }
   text-align: center;
 }
 
+/* Le formulaire est la cible des boutons « Demander un devis » :
+   sans cette marge, l'en-tête collant recouvrirait ses premiers champs. */
+#contactForm { scroll-margin-top: 100px; }
+
+/* Piège à robots. Retiré du flux plutôt que « display: none » : certains
+   robots ignorent les champs masqués de cette façon et tombent alors
+   dans le piège. Invisible et inatteignable pour un visiteur. */
+.form-piege {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Résultat de l'envoi, affiché sous le bouton. */
+.form-status {
+  margin: 14px 0 0;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm, 8px);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-align: center;
+}
+.form-status[data-etat="succes"] {
+  background: rgba(22, 163, 74, 0.1);
+  border: 1px solid rgba(22, 163, 74, 0.35);
+  color: #15803D;
+}
+.form-status[data-etat="erreur"] {
+  background: rgba(224, 17, 21, 0.08);
+  border: 1px solid rgba(224, 17, 21, 0.3);
+  color: var(--red, #E01115);
+}
+
+/* Pendant l'envoi : le bouton reste lisible mais inopérant. */
+.contact-form button[disabled] {
+  opacity: 0.65;
+  cursor: progress;
+}
+
 /* ===== Footer ===== */
 .site-footer {
   background: var(--navy-darker);
