@@ -106,7 +106,10 @@ async function main() {
       '/items/products?fields=id,name,ref,sku,description,price,promo_price,stock,image,specs,' +
         'is_featured,is_popular,is_promo,category.id,category.name,category.slug&sort=sort,name&limit=-1'
     ),
-    api('/items/services?fields=id,name,description,icon_svg,image&sort=sort,name&limit=-1'),
+    api(
+      '/items/services?fields=id,name,description,details,featured,icon_svg,image' +
+        '&sort=sort,name&limit=-1'
+    ),
     api('/items/testimonials?fields=id,name,role,quote,rating,photo&sort=sort&limit=-1'),
     api('/items/site_settings')
   ]);
@@ -171,6 +174,11 @@ async function main() {
       id: s.id,
       name: s.name,
       description: s.description || '',
+      // Contenu du panneau « Lire plus ». Une ligne par élément ;
+      // celles commençant par « - » deviennent des puces.
+      details: s.details || '',
+      // Service principal : carte pleine largeur, en tête de section.
+      featured: Boolean(s.featured),
       icon_svg: s.icon_svg || ''
     })),
     testimonials: exportedTestimonials

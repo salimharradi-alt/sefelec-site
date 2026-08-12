@@ -485,6 +485,109 @@ img.testimonial-avatar { object-fit: cover; }
 .service-card h3 { margin-bottom: 8px; font-size: 1.05rem; }
 .service-card p { margin: 0; font-size: 0.9rem; }
 
+/* Colonne : les boutons se collent au bas de la carte, ce qui les aligne
+   d'une carte à l'autre malgré des descriptions de longueurs inégales. */
+.service-card {
+  display: flex;
+  flex-direction: column;
+}
+.service-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+/* « Lire plus » : un lien d'apparence, pour ne pas concurrencer
+   visuellement le bouton d'appel à l'action du service principal. */
+.service-more {
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--navy);
+  cursor: pointer;
+  border-bottom: 2px solid var(--red);
+  transition: color var(--transition);
+}
+.service-more:hover { color: var(--red); }
+.service-more::after { content: ' →'; }
+
+/* ----- Service principal ----- */
+/* « 1 / -1 » couvre toute la grille quel que soit le nombre de colonnes
+   du palier courant : inutile de répéter la règle à chaque breakpoint. */
+.service-card-featured {
+  grid-column: 1 / -1;
+  position: relative;
+  padding: 32px 28px;
+  border-color: rgba(224, 17, 21, 0.35);
+  box-shadow: var(--shadow-md);
+}
+.service-card-featured .service-icon {
+  background: var(--red);
+  color: #fff;
+}
+.service-card-featured h3 {
+  font-size: clamp(1.15rem, calc(1rem + 0.6vw), 1.45rem);
+}
+/* Sur grand écran la carte est très large : sans limite, la description
+   s'étirerait sur toute la page et deviendrait pénible à lire. */
+.service-card-featured p { max-width: 62ch; font-size: 0.95rem; }
+
+.service-flag {
+  display: inline-block;
+  align-self: flex-start;
+  margin-bottom: 14px;
+  padding: 5px clamp(9px, 1.2vw, 13px);
+  border-radius: 999px;
+  background: var(--red);
+  color: #fff;
+  font-size: clamp(0.62rem, calc(0.55rem + 0.2vw), 0.72rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ----- Contenu de la fenêtre de détail ----- */
+.service-detail p {
+  margin: 0 0 14px;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+.service-points {
+  margin: 0 0 18px;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px 22px;
+}
+.service-points li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+.service-points li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--red);
+}
+@media (max-width: 620px) {
+  /* Deux colonnes de puces deviendraient illisibles sur téléphone. */
+  .service-points { grid-template-columns: 1fr; }
+}
+
 /* ===== Pourquoi nous ===== */
 .why-grid {
   display: grid;

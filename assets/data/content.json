@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-09T18:19:10.598Z",
+  "generatedAt": "2026-08-12T14:50:47.857Z",
   "settings": {
     "id": "692fc7e7-c2a4-4328-bd1d-3ebe1b3d0661",
     "site_name": "SEFELEC S.A.R.L.",
@@ -276,51 +276,43 @@
   ],
   "services": [
     {
-      "id": "f0fb40fe-dc40-4f9a-ac8f-9c482d038ed6",
-      "name": "Électricité MT/BT",
-      "description": "Étude et réalisation de vos installations électriques moyenne et basse tension.",
-      "icon_svg": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><path d=\"M13 2L4 14H11L9 22L20 8H12L13 2Z\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/></svg>"
-    },
-    {
-      "id": "ec465821-d164-4e7f-bbf8-47fe48bb9687",
-      "name": "Automatisme Industriel",
-      "description": "Conception et intégration de solutions automatisées pour vos process de production.",
-      "icon_svg": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"1.6\"/><circle cx=\"12\" cy=\"12\" r=\"3\" stroke=\"currentColor\" stroke-width=\"1.6\"/><path d=\"M12 4V2M12 22V20M4 12H2M22 12H20\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\"/></svg>"
-    },
-    {
-      "id": "07de1254-1705-4113-be6f-d45fd6b150c1",
-      "name": "Tableaux Électriques",
-      "description": "Conception, câblage et mise en service de tableaux électriques industriels.",
-      "icon_svg": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"2\" stroke=\"currentColor\" stroke-width=\"1.6\"/><path d=\"M8 8H16V16H8V8Z\" stroke=\"currentColor\" stroke-width=\"1.6\"/></svg>"
-    },
-    {
       "id": "753c1a85-b5b6-4a69-86ba-bac84cdbbc30",
-      "name": "Armoires Électriques",
-      "description": "Montage d'armoires électriques sur mesure, fiables et conformes.",
+      "name": "Conception et réalisation d'armoires électriques",
+      "description": "Conception, câblage et mise en service d'armoires de commande et de puissance, adaptées à votre process industriel.",
+      "details": "De l'étude du schéma jusqu'à la mise en service, nous réalisons vos armoires électriques sur mesure : assemblage et câblage en atelier, essais avant livraison, puis raccordement et mise en route sur votre site.\n- Conception d'armoires électriques adaptées à votre installation\n- Étude des schémas électriques\n- Choix et dimensionnement des composants\n- Câblage et assemblage en atelier\n- Armoires de commande\n- Armoires de puissance\n- Tableaux électriques industriels\n- Tests et vérifications avant livraison\n- Mise en service sur site\n- Respect des normes et exigences du projet\nChaque armoire est repérée et livrée avec son dossier de schémas, pour faciliter vos interventions ultérieures.",
+      "featured": true,
       "icon_svg": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><rect x=\"5\" y=\"3\" width=\"14\" height=\"18\" rx=\"2\" stroke=\"currentColor\" stroke-width=\"1.6\"/><path d=\"M9 8H15M9 12H15M9 16H12\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\"/></svg>"
     },
     {
+      "id": "ec465821-d164-4e7f-bbf8-47fe48bb9687",
+      "name": "Automatisme industriel",
+      "description": "Conception et intégration de solutions automatisées pour vos process de production.",
+      "details": "Nous automatisons vos équipements de production, de l'analyse du besoin jusqu'à la mise au point sur site.\n- Analyse du process et rédaction du cahier des charges\n- Programmation d'automates\n- Supervision et interfaces opérateur\n- Intégration aux équipements déjà en place\n- Mise au point et essais de fonctionnement\n- Accompagnement de vos équipes à la prise en main",
+      "featured": false,
+      "icon_svg": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"1.6\"/><circle cx=\"12\" cy=\"12\" r=\"3\" stroke=\"currentColor\" stroke-width=\"1.6\"/><path d=\"M12 4V2M12 22V20M4 12H2M22 12H20\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\"/></svg>"
+    },
+    {
+      "id": "f0fb40fe-dc40-4f9a-ac8f-9c482d038ed6",
+      "name": "Étude et réalisation des travaux d'électricité MT/BT",
+      "description": "Étude et réalisation de vos installations électriques moyenne et basse tension.",
+      "details": "Nous prenons en charge vos travaux moyenne et basse tension, de l'étude technique jusqu'à la réception de l'installation.\n- Étude technique et dimensionnement\n- Postes de transformation MT/BT\n- Distribution basse tension\n- Chemins de câbles et raccordements\n- Mise à la terre et protections\n- Essais et réception de l'installation",
+      "featured": false,
+      "icon_svg": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><path d=\"M13 2L4 14H11L9 22L20 8H12L13 2Z\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/></svg>"
+    },
+    {
       "id": "ae95bf37-ec54-4f35-aa2b-92ef305f39a0",
-      "name": "Installation Électrique Industrielle",
+      "name": "Installation électrique industrielle",
       "description": "Réalisation complète de vos installations électriques en environnement industriel.",
+      "details": "De l'atelier à la ligne de production, nous réalisons l'ensemble de votre installation électrique et coordonnons nos interventions avec vos contraintes d'exploitation.\n- Alimentation des machines et des équipements\n- Éclairage industriel\n- Réseaux de distribution et coffrets divisionnaires\n- Câblage courant fort et courant faible\n- Repérage et documentation de l'installation\n- Essais avant remise en exploitation",
+      "featured": false,
       "icon_svg": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><path d=\"M4 12H8L10 6L14 18L16 12H20\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>"
     },
     {
-      "id": "046f1d47-8b81-4748-8a33-dab5eab102c4",
-      "name": "Maintenance Électrique",
-      "description": "Contrats de maintenance préventive et corrective pour vos installations.",
-      "icon_svg": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><path d=\"M14.7 6.3a1 1 0 0 0 1.4 1.4l3.6-3.6a5 5 0 0 1-6.7 6.7l-6.5 6.5a2 2 0 1 1-2.8-2.8l6.5-6.5a5 5 0 0 1 6.7-6.7l-3.6 3.6a1 1 0 0 0 1.4 1.4\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/></svg>"
-    },
-    {
-      "id": "ae583d42-bdc9-47bd-887d-c923d06c580e",
-      "name": "Dépannage Électrique",
-      "description": "Intervention rapide en cas de panne pour limiter l'impact sur votre activité.",
-      "icon_svg": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><path d=\"M12 9V13M12 17H12.01M10.3 3.9L2.5 17A2 2 0 0 0 4.2 20H19.8A2 2 0 0 0 21.5 17L13.7 3.9A2 2 0 0 0 10.3 3.9Z\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/></svg>"
-    },
-    {
       "id": "333b9182-5ca1-401b-a5c2-823c64f74eee",
-      "name": "Mise en Conformité",
+      "name": "Mise en conformité des installations",
       "description": "Diagnostic et mise en conformité de vos installations électriques existantes.",
+      "details": "Nous établissons un état des lieux de votre installation, identifions les points à reprendre et réalisons les travaux correctifs.\n- Diagnostic de l'installation existante\n- Relevé des non-conformités\n- Chiffrage des travaux à engager\n- Reprise des protections et des mises à la terre\n- Remise en état des armoires et des raccordements\n- Respect des normes et exigences du projet",
+      "featured": false,
       "icon_svg": "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"none\"><path d=\"M9 12L11 14L15.5 9.5\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M12 2L4 6V12C4 17 7.5 21.4 12 22C16.5 21.4 20 17 20 12V6L12 2Z\" stroke=\"currentColor\" stroke-width=\"1.6\"/></svg>"
     }
   ],

@@ -199,20 +199,101 @@ const servicesGrid = document.getElementById('servicesGrid');
 const DEFAULT_SERVICE_ICON =
   '<svg viewBox="0 0 24 24" width="28" height="28" fill="none"><path d="M13 2L4 14H11L9 22L20 8H12L13 2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>';
 
+/**
+ * Convertit le champ « details » du back-office en HTML.
+ * Une ligne commençant par « - » devient une puce, les autres des
+ * paragraphes. Tout est échappé : le contenu vient du tableau de bord,
+ * il ne doit jamais pouvoir injecter de balises.
+ */
+function detailsEnHtml(texte) {
+  const lignes = String(texte || '').split('\n').map(l => l.trim()).filter(Boolean);
+  let html = '';
+  let dansListe = false;
+
+  for (const ligne of lignes) {
+    if (ligne.startsWith('-')) {
+      if (!dansListe) { html += '<ul class="service-points">'; dansListe = true; }
+      html += `<li>${escapeHtml(ligne.replace(/^-\s*/, ''))}</li>`;
+    } else {
+      if (dansListe) { html += '</ul>'; dansListe = false; }
+      html += `<p>${escapeHtml(ligne)}</p>`;
+    }
+  }
+  if (dansListe) html += '</ul>';
+  return html;
+}
+
 function renderServices() {
   if (!SERVICES.length) {
     servicesGrid.innerHTML = `<p class="empty-state">Aucun service publié pour le moment.</p>`;
     return;
   }
 
-  servicesGrid.innerHTML = SERVICES.map(s => `
-    <article class="service-card">
+  // Le service mis en avant passe en tête, quel que soit l'ordre reçu.
+  const liste = [...SERVICES].sort((a, b) => Number(b.featured) - Number(a.featured));
+
+  servicesGrid.innerHTML = liste.map(s => {
+    const principal = Boolean(s.featured);
+    return `
+    <article class="service-card${principal ? ' service-card-featured' : ''}" data-id="${escapeHtml(s.id)}">
+      ${principal ? '<span class="service-flag">Notre spécialité</span>' : ''}
       <div class="service-icon">${s.icon_svg || DEFAULT_SERVICE_ICON}</div>
       <h3>${escapeHtml(s.name)}</h3>
       <p>${escapeHtml(s.description || '')}</p>
-    </article>
-  `).join('');
+      <div class="service-actions">
+        ${s.details
+          ? `<button type="button" class="service-more" data-id="${escapeHtml(s.id)}">Lire plus</button>`
+          : ''}
+        ${principal
+          ? `<a href="#contactForm" class="btn btn-primary service-quote">Demander un devis</a>`
+          : ''}
+      </div>
+    </article>`;
+  }).join('');
 }
+
+// ---------------------------------------------------------------------------
+// Détail d'un service
+// ---------------------------------------------------------------------------
+const serviceModal = document.getElementById('serviceModal');
+const serviceModalTitle = document.getElementById('serviceModalTitle');
+const serviceModalBody = document.getElementById('serviceModalBody');
+const serviceModalClose = document.getElementById('serviceModalClose');
+
+function openServiceModal(id) {
+  const service = SERVICES.find(s => String(s.id) === String(id));
+  if (!service) return;
+
+  serviceModalTitle.textContent = service.name;
+  serviceModalBody.innerHTML = detailsEnHtml(service.details);
+
+  serviceModal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  serviceModalClose.focus();
+}
+
+function closeServiceModal() {
+  serviceModal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Délégation : les cartes sont créées après le chargement de la page.
+servicesGrid.addEventListener('click', (e) => {
+  const bouton = e.target.closest('.service-more');
+  if (bouton) openServiceModal(bouton.dataset.id);
+});
+
+serviceModalClose.addEventListener('click', closeServiceModal);
+serviceModal.addEventListener('click', (e) => {
+  if (e.target === serviceModal) closeServiceModal();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeServiceModal();
+});
+
+// Depuis la fenêtre de détail, « Demander un devis » doit d'abord la
+// fermer : sans cela, le défilement se ferait derrière un panneau ouvert.
+document.getElementById('serviceModalQuote').addEventListener('click', closeServiceModal);
 
 // ===========================================================================
 // Témoignages
@@ -357,22 +438,22 @@ contactForm.addEventListener('submit', async (e) => {
   }
 });
 
-// Arrivée depuis un bouton « Demander un devis » : on place le curseur
-// dans le premier champ pour que la saisie commence sans clic
-// supplémentaire.
+// Tout bouton « Demander un devis » amène au formulaire et y place le
+// curseur, pour que la saisie commence sans clic supplémentaire.
 //
-// Le focus doit attendre la FIN du défilement. Déclenché pendant
-// l'animation, il l'interrompt : le formulaire s'immobilisait alors à
-// mi-course, partiellement hors écran (constaté au test sur mobile).
-// Le défilement est piloté ici plutôt que laissé à l'ancre HTML : un
-// navigateur ignore un lien pointant vers l'ancre courante. Sans cela,
-// après une première demande, remonter puis recliquer « Demander un
-// devis » ne produisait plus rien (constaté au test).
+// Trois points appris au test :
+//  — le défilement est piloté ici plutôt que laissé à l'ancre HTML, un
+//    navigateur ignorant un lien vers l'ancre où il se trouve déjà ;
+//    sans cela, recliquer le bouton ne produisait plus rien ;
+//  — le focus attend la fin du défilement, sous peine de l'interrompre ;
+//  — la délégation est posée sur le document, car les cartes de services
+//    et la fenêtre de détail naissent après le chargement de la page.
 //
 // L'attribut href reste en place : sans JavaScript, le lien fonctionne
 // toujours de façon native.
-document.querySelectorAll('a[href="#contactForm"]').forEach((lien) => {
-  lien.addEventListener('click', (evenement) => {
+document.addEventListener('click', (evenement) => {
+  const lien = evenement.target.closest('a[href="#contactForm"]');
+  if (lien) {
     const formulaire = document.getElementById('contactForm');
     if (!formulaire) return;
 
@@ -401,7 +482,7 @@ document.querySelectorAll('a[href="#contactForm"]').forEach((lien) => {
     // 2,3 s pour un défilement pleine page — d'où cette marge.
     window.addEventListener('scrollend', placerLeCurseur);
     setTimeout(placerLeCurseur, 3000);
-  });
+  }
 });
 
 // ===========================================================================
