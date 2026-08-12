@@ -59,15 +59,37 @@ h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); }
 h3 { font-size: 1.2rem; }
 p { margin: 0 0 16px; color: var(--ink-soft); }
 
+/* Pastilles de section.
+ *
+ * La plus longue — « Électricité industrielle MT/BT & Automatisme », 44
+ * caractères — doit tenir sur une seule ligne jusqu'à 320 px de large.
+ * C'est elle qui dicte le calibrage ci-dessous.
+ *
+ * La taille suit la largeur de la fenêtre de façon continue plutôt que
+ * par paliers : un media query ferait sauter la police d'un cran au
+ * franchissement du seuil, et il faudrait un palier par dimension.
+ * Les bornes du clamp() figent la valeur d'origine sur grand écran et
+ * la plus petite taille encore lisible sur mobile.
+ *
+ * Pas de overflow: hidden — le texte doit rester entier, jamais rogné.
+ */
 .eyebrow {
   display: inline-block;
-  font-size: 0.8rem;
+  max-width: 100%;
+  white-space: nowrap;
+  /* Borne basse à 8.5px : elle n'entre pas en jeu à 320 px (la formule
+     y donne 9.33px), mais laisse la police continuer de décroître en
+     dessous. Sans cela, le texte débordait de la pastille sur un écran
+     de 280 px — un Galaxy Fold replié. */
+  font-size: clamp(8.5px, calc(6.9px + 0.76vw), 0.8rem);
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: clamp(0.03em, 0.12vw, 0.08em);
   text-transform: uppercase;
   color: var(--red);
   background: var(--red-light);
-  padding: 6px 14px;
+  /* Le rembourrage se resserre avec la police : garder 14px sur mobile
+     mangerait la largeur dont le texte a besoin. */
+  padding: 6px clamp(9px, 1.2vw, 14px);
   border-radius: 999px;
   margin-bottom: 16px;
 }
@@ -501,13 +523,17 @@ img.testimonial-avatar { object-fit: cover; }
   margin-bottom: 40px;
 }
 .filter-btn {
-  padding: 10px 20px;
+  /* Les libellés viennent du tableau de bord : une catégorie au nom plus
+     long ne doit pas se couper en deux à l'intérieur du bouton. Les
+     boutons, eux, continuent de passer à la ligne entre eux. */
+  white-space: nowrap;
+  padding: 10px clamp(14px, 2vw, 20px);
   border-radius: 999px;
   border: 1px solid var(--border);
   background: var(--paper);
   color: var(--ink-soft);
   font-weight: 600;
-  font-size: 0.88rem;
+  font-size: clamp(0.78rem, calc(0.7rem + 0.25vw), 0.88rem);
   cursor: pointer;
   transition: background var(--transition), color var(--transition), border-color var(--transition);
 }
@@ -553,15 +579,19 @@ img.testimonial-avatar { object-fit: cover; }
   transition: transform var(--transition);
 }
 .catalog-card:hover .catalog-photo img { transform: scale(1.05); }
+/* Étiquette de catégorie : même règle que .eyebrow, mais les libellés
+   sont bien plus courts. La borne basse est donc moins agressive. */
 .catalog-tag {
   align-self: flex-start;
-  font-size: 0.7rem;
+  max-width: 100%;
+  white-space: nowrap;
+  font-size: clamp(0.6rem, calc(0.5rem + 0.3vw), 0.7rem);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--red);
   background: var(--red-light);
-  padding: 4px 10px;
+  padding: 4px clamp(7px, 1vw, 10px);
   border-radius: 999px;
   margin-bottom: 10px;
 }
