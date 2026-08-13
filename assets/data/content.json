@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-13T14:51:15.100Z",
+  "generatedAt": "2026-08-13T15:05:47.059Z",
   "settings": {
     "id": "692fc7e7-c2a4-4328-bd1d-3ebe1b3d0661",
     "site_name": "SEFELEC S.A.R.L.",
@@ -440,5 +440,46 @@
       "photo": null
     }
   ],
-  "partners": []
+  "partners": [
+    {
+      "id": "78ecb5a1-ab59-4094-b8ce-fdfd1f24ad95",
+      "name": "BUTEC",
+      "logo": "assets/images/content/9e50ad59-3ec7-4b0b-b68b-18953993f1fb-logo.webp",
+      "website": "https://www.butec.com",
+      "description": "",
+      "alt": "Logo BUTEC — partenaire de SEFELEC"
+    },
+    {
+      "id": "202122cf-c0cb-4754-a53a-492b2b54aa68",
+      "name": "Cegelec",
+      "logo": "assets/images/content/6ab8cc20-441f-4f33-ac71-2a614ed5b2f7-logo.webp",
+      "website": null,
+      "description": "",
+      "alt": "Logo Cegelec — partenaire de SEFELEC"
+    },
+    {
+      "id": "a2704606-a74c-4ce9-b7af-c0b68c026bfa",
+      "name": "Mondelēz International",
+      "logo": "assets/images/content/12482abc-6856-4dd6-9d53-d3defed92f52-logo.webp",
+      "website": "https://www.mondelezinternational.com",
+      "description": "",
+      "alt": "Logo Mondelēz International — partenaire de SEFELEC"
+    },
+    {
+      "id": "74455d0c-8aed-49c8-abf9-5ca49570f3f9",
+      "name": "PLASTIMA",
+      "logo": "assets/images/content/ed4ca538-c39e-4285-a54a-2a39b40c0e6e-logo.webp",
+      "website": null,
+      "description": "",
+      "alt": "Logo PLASTIMA — partenaire de SEFELEC"
+    },
+    {
+      "id": "2d2a4875-84e1-46e8-908a-bc6b2960d3f6",
+      "name": "Siemens Healthineers",
+      "logo": "assets/images/content/023a0293-e042-4647-8c3a-1268690c499e-logo.webp",
+      "website": "https://www.siemens-healthineers.com",
+      "description": "",
+      "alt": "Logo Siemens Healthineers — partenaire de SEFELEC"
+    }
+  ]
 }

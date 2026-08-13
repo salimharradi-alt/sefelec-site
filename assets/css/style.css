@@ -1120,16 +1120,25 @@ a.service-more { text-decoration: none; display: inline-block; }
 }
 
 /* ===== Nos partenaires =====
-   Grille auto-adaptative : le nombre de colonnes découle de la largeur
-   disponible, sans palier à écrire pour chaque taille d'écran. Elle
-   s'ajuste donc aussi bien à 3 partenaires qu'à 20. */
+   Flexbox plutôt que grille, à dessein.
+   Une grille impose des pistes de largeur identique : avec 5 logos, elle
+   laissait soit une piste vide et 192 px de blanc à droite, soit un
+   cinquième logo seul sur une deuxième ligne. La flexbox centre les
+   éléments et, surtout, centre aussi la dernière ligne incomplète —
+   ce qui reste équilibré quel que soit le nombre de partenaires. */
 .partners-grid {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 18px;
+}
+.partner-card {
+  /* Largeur souhaitée, autorisée à se réduire pour tenir dans la ligne. */
+  flex: 0 1 190px;
+  max-width: 220px;
 }
 .partner-card {
   background: var(--paper);
@@ -1180,7 +1189,8 @@ a.service-more { text-decoration: none; display: inline-block; }
 @media (max-width: 560px) {
   /* Deux logos par ligne restent lisibles sur téléphone ; un seul
      étirerait la section sur une hauteur inutile. */
-  .partners-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .partners-grid { gap: 12px; }
+  .partner-card { flex: 0 1 calc(50% - 6px); }
   .partner-card img { height: 52px; }
 }
 .testimonial-card {
