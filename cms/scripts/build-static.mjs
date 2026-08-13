@@ -21,6 +21,14 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
+import {
+  pageServices,
+  pageService,
+  pageProduits,
+  pageCategorie,
+  pageProduit
+} from './lib/generer.mjs';
+
 const SITE_ROOT = path.resolve('..');
 const DATA_DIR = path.join(SITE_ROOT, 'assets', 'data');
 const IMG_DIR = path.join(SITE_ROOT, 'assets', 'images', 'content');
@@ -101,14 +109,18 @@ async function main() {
   }
 
   const [categories, products, services, testimonials, settings] = await Promise.all([
-    api('/items/categories?fields=id,name,slug&sort=sort,name&limit=-1'),
     api(
-      '/items/products?fields=id,name,ref,sku,description,price,promo_price,stock,image,specs,' +
+      '/items/categories?fields=id,name,slug,description,seo_title,seo_description,keywords' +
+        '&sort=sort,name&limit=-1'
+    ),
+    api(
+      '/items/products?fields=id,name,ref,sku,slug,description,price,promo_price,stock,image,specs,' +
+        'applications,avantages,seo_title,seo_description,keywords,image_alt,' +
         'is_featured,is_popular,is_promo,category.id,category.name,category.slug&sort=sort,name&limit=-1'
     ),
     api(
-      '/items/services?fields=id,name,description,details,featured,icon_svg,image' +
-        '&sort=sort,name&limit=-1'
+      '/items/services?fields=id,name,slug,description,details,avantages,applications,equipements,' +
+        'featured,icon_svg,image,seo_title,seo_description,keywords&sort=sort,name&limit=-1'
     ),
     api('/items/testimonials?fields=id,name,role,quote,rating,photo&sort=sort&limit=-1'),
     api('/items/site_settings')
@@ -128,7 +140,15 @@ async function main() {
       id: p.id,
       name: p.name || '(sans nom)',
       ref: p.ref || p.sku || '—',
+      // Adresse de la fiche produit. Sans elle, pas de page dédiée.
+      slug: p.slug || null,
       desc: p.description || '',
+      applications: p.applications || '',
+      avantages: p.avantages || '',
+      seo_title: p.seo_title || '',
+      seo_description: p.seo_description || '',
+      keywords: p.keywords || '',
+      image_alt: p.image_alt || '',
       price: Number(hasPromo ? p.promo_price : p.price) || 0,
       basePrice: Number(p.price) || 0,
       hasPromo,
@@ -173,7 +193,14 @@ async function main() {
     services: (services || []).map((s) => ({
       id: s.id,
       name: s.name,
+      slug: s.slug || null,
       description: s.description || '',
+      avantages: s.avantages || '',
+      applications: s.applications || '',
+      equipements: s.equipements || '',
+      seo_title: s.seo_title || '',
+      seo_description: s.seo_description || '',
+      keywords: s.keywords || '',
       // Contenu du panneau « Lire plus ». Une ligne par élément ;
       // celles commençant par « - » deviennent des puces.
       details: s.details || '',
@@ -187,19 +214,84 @@ async function main() {
   const out = path.join(DATA_DIR, 'content.json');
   fs.writeFileSync(out, JSON.stringify(content, null, 2), 'utf8');
 
+  // --- Pages dédiées ---
+  // Un dossier par page avec son index.html : l'adresse est propre sans
+  // règle de réécriture, et chaque page possède son titre, sa description
+  // et ses données structurées.
+  console.log('\n— Pages générées —');
+
+  const servicesPublies = content.services.filter((s) => s.slug);
+  const categoriesUtiles = (categories || []).filter((c) =>
+    exportedProducts.some((p) => p.category === c.slug)
+  );
+
+  // Les dossiers sont recréés à chaque génération : une page dont le
+  // contenu a été supprimé du back-office ne doit pas survivre en ligne.
+  for (const dossier of ['services', 'produits']) {
+    fs.rmSync(path.join(SITE_ROOT, dossier), { recursive: true, force: true });
+  }
+
+  const urls = [{ loc: `${SITE_URL}/`, priority: '1.0', changefreq: 'weekly' }];
+
+  function ecrirePage(cheminRelatif, html, priorite, frequence = 'monthly') {
+    const dossier = path.join(SITE_ROOT, cheminRelatif);
+    fs.mkdirSync(dossier, { recursive: true });
+    fs.writeFileSync(path.join(dossier, 'index.html'), html, 'utf8');
+    urls.push({
+      loc: `${SITE_URL}/${cheminRelatif.split(path.sep).join('/')}/`,
+      priority: priorite,
+      changefreq: frequence
+    });
+  }
+
+  ecrirePage('services', pageServices(servicesPublies), '0.9', 'monthly');
+  for (const service of servicesPublies) {
+    // Le service principal est la page la plus importante du site après
+    // l'accueil : sa priorité le reflète dans le sitemap.
+    ecrirePage(
+      path.join('services', service.slug),
+      pageService(service, servicesPublies),
+      service.featured ? '0.9' : '0.8'
+    );
+  }
+  console.log(`  /services/ + ${servicesPublies.length} pages service`);
+
+  ecrirePage('produits', pageProduits(exportedProducts, categoriesUtiles, servicesPublies), '0.9', 'weekly');
+  let nbFiches = 0;
+  for (const categorie of categoriesUtiles) {
+    const dedans = exportedProducts.filter((p) => p.category === categorie.slug);
+    ecrirePage(path.join('produits', categorie.slug), pageCategorie(categorie, dedans, servicesPublies), '0.7');
+
+    for (const produit of dedans) {
+      if (!produit.slug) {
+        console.warn(`  ! ${produit.name} : pas d'adresse, fiche non générée`);
+        continue;
+      }
+      const similaires = dedans.filter((p) => p.id !== produit.id).slice(0, 3);
+      ecrirePage(
+        path.join('produits', categorie.slug, produit.slug),
+        pageProduit(produit, categorie, similaires, servicesPublies, content.settings?.currency),
+        '0.6'
+      );
+      nbFiches++;
+    }
+  }
+  console.log(`  /produits/ + ${categoriesUtiles.length} catégories + ${nbFiches} fiches produit`);
+
   // --- Sitemap ---
-  // Le site tient en une page ; les sections sont des ancres, que les
-  // moteurs découvrent seuls. On déclare donc l'URL principale, avec la
-  // date réelle de la dernière génération de contenu.
   const today = new Date().toISOString().slice(0, 10);
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>${SITE_URL}/</loc>
+${urls
+    .map(
+      (u) => `  <url>
+    <loc>${u.loc}</loc>
     <lastmod>${today}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
+    <changefreq>${u.changefreq}</changefreq>
+    <priority>${u.priority}</priority>
+  </url>`
+    )
+    .join('\n')}
 </urlset>
 `;
   fs.writeFileSync(path.join(SITE_ROOT, 'sitemap.xml'), sitemap, 'utf8');
@@ -210,7 +302,7 @@ async function main() {
   console.log('\n✓ Génération terminée');
   console.log(`  assets/data/content.json      ${(fs.statSync(out).size / 1024).toFixed(1)} Ko`);
   console.log(`  assets/images/content/        ${images.length} fichiers, ${(weight / 1024).toFixed(0)} Ko`);
-  console.log(`  sitemap.xml                   ${SITE_URL}/`);
+  console.log(`  sitemap.xml                   ${urls.length} adresses`);
   console.log('\nLe site est prêt à être publié : git add . && git commit && git push');
 }
 

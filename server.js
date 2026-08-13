@@ -52,7 +52,9 @@ const MIME = {
  * data.db, uploads/…) ne doit jamais être servi au public. Tout ce qui n'est
  * pas dans cette liste est relayé vers Directus.
  */
-const STATIC_PREFIXES = ['assets/'];
+// « services/ » et « produits/ » contiennent les pages générées par
+// « npm run build » : un dossier par page, avec son index.html.
+const STATIC_PREFIXES = ['assets/', 'services/', 'produits/'];
 const STATIC_FILES = new Set([
   'index.html',
   '404.html',
@@ -72,6 +74,10 @@ function resolveStaticFile(pathname) {
   rel = rel.replace(/^\/+/, '');
   if (rel === '') rel = 'index.html';
 
+  // « /services/armoires-electriques/ » → le fichier index.html du
+  // dossier, comme le fait Apache en ligne via DirectoryIndex.
+  if (rel.endsWith('/')) rel += 'index.html';
+
   const allowed = STATIC_FILES.has(rel) || STATIC_PREFIXES.some((p) => rel.startsWith(p));
   if (!allowed) return null;
 
@@ -80,7 +86,16 @@ function resolveStaticFile(pathname) {
   if (abs !== SITE_ROOT && !abs.startsWith(SITE_ROOT + path.sep)) return null;
 
   try {
-    return fs.statSync(abs).isFile() ? abs : null;
+    const infos = fs.statSync(abs);
+    if (infos.isFile()) return abs;
+
+    // Adresse sans barre oblique finale (« /produits/disjoncteurs ») :
+    // Apache y sert l'index du dossier, on fait de même.
+    if (infos.isDirectory()) {
+      const index = path.join(abs, 'index.html');
+      return fs.existsSync(index) ? index : null;
+    }
+    return null;
   } catch {
     return null;
   }

@@ -69,6 +69,8 @@ async function api(method, endpoint, body) {
 const SERVICES = [
   {
     cle: 'Armoires Électriques',
+    seo_title: "Armoires électriques sur mesure à Casablanca — SEFELEC",
+    seo_description: "Conception, câblage et mise en service d'armoires de commande et de puissance sur mesure. SEFELEC, Casablanca : étude, atelier, essais, mise en route.",
     name: 'Conception et réalisation d\'armoires électriques',
     description:
       'Conception, câblage et mise en service d\'armoires de commande et de puissance, adaptées à votre process industriel.',
@@ -87,10 +89,36 @@ const SERVICES = [
       '- Mise en service sur site',
       '- Respect des normes et exigences du projet',
       'Chaque armoire est repérée et livrée avec son dossier de schémas, pour faciliter vos interventions ultérieures.'
+    ].join('\n'),
+    avantages: [
+      '- Un interlocuteur unique de l\'étude à la mise en service',
+      '- Des armoires dimensionnées pour votre installation, sans surcoût inutile',
+      '- Un assemblage en atelier qui réduit la durée d\'immobilisation sur site',
+      '- Des essais réalisés avant livraison, pas découverts au démarrage',
+      '- Un repérage et un dossier de schémas qui accélèrent vos dépannages',
+      '- Des évolutions facilitées : réserves prévues dès la conception'
+    ].join('\n'),
+    applications: [
+      '- Industrie agroalimentaire',
+      '- Industrie textile et confection',
+      '- Bâtiment et second œuvre industriel',
+      '- Logistique et entrepôts',
+      '- Ateliers de production et lignes automatisées',
+      '- Stations de pompage et traitement des eaux'
+    ].join('\n'),
+    equipements: [
+      '- Armoires de commande et de contrôle',
+      '- Armoires de puissance et de distribution',
+      '- Tableaux généraux basse tension',
+      '- Coffrets divisionnaires et coffrets de chantier',
+      '- Armoires de démarrage moteur',
+      '- Armoires pour automates et supervision'
     ].join('\n')
   },
   {
     cle: 'Automatisme Industriel',
+    seo_title: "Automatisme industriel à Casablanca — SEFELEC S.A.R.L.",
+    seo_description: "Programmation d'automates, supervision et intégration sur vos lignes de production. SEFELEC vous accompagne de l'analyse à la mise au point.",
     name: 'Automatisme industriel',
     description:
       'Conception et intégration de solutions automatisées pour vos process de production.',
@@ -104,10 +132,33 @@ const SERVICES = [
       '- Intégration aux équipements déjà en place',
       '- Mise au point et essais de fonctionnement',
       '- Accompagnement de vos équipes à la prise en main'
+    ].join('\n'),
+    avantages: [
+      '- Des cycles de production plus réguliers et reproductibles',
+      '- Moins d\'interventions manuelles sur les tâches répétitives',
+      '- Un diagnostic facilité par la supervision en cas d\'arrêt',
+      '- Une intégration pensée pour vos équipements déjà en place',
+      '- Des évolutions possibles sans reprendre toute l\'installation'
+    ].join('\n'),
+    applications: [
+      '- Lignes de production et convoyage',
+      '- Machines spéciales',
+      '- Stations de pompage et de dosage',
+      '- Traitement et distribution des fluides',
+      '- Gestion technique de bâtiment industriel'
+    ].join('\n'),
+    equipements: [
+      '- Automates programmables',
+      '- Interfaces opérateur et pupitres',
+      '- Supervision et suivi de production',
+      '- Variateurs de vitesse et démarreurs',
+      '- Capteurs, détecteurs et instrumentation'
     ].join('\n')
   },
   {
     cle: 'Électricité MT/BT',
+    seo_title: "Travaux d'électricité MT/BT à Casablanca — SEFELEC",
+    seo_description: "Postes de transformation, distribution basse tension, mise à la terre et essais de réception. SEFELEC, Casablanca.",
     name: 'Étude et réalisation des travaux d\'électricité MT/BT',
     description:
       'Étude et réalisation de vos installations électriques moyenne et basse tension.',
@@ -121,10 +172,32 @@ const SERVICES = [
       '- Chemins de câbles et raccordements',
       '- Mise à la terre et protections',
       '- Essais et réception de l\'installation'
+    ].join('\n'),
+    avantages: [
+      '- Un dimensionnement adapté à votre puissance réelle et à vos extensions prévues',
+      '- Des protections cohérentes entre elles, du poste jusqu\'aux départs',
+      '- Une exécution coordonnée avec vos arrêts de production',
+      '- Une installation repérée et documentée pour vos interventions',
+      '- Des essais de réception qui valident l\'installation avant exploitation'
+    ].join('\n'),
+    applications: [
+      '- Sites industriels et zones de production',
+      '- Bâtiments tertiaires et locaux techniques',
+      '- Entrepôts et plateformes logistiques',
+      '- Extensions et renforcements de puissance'
+    ].join('\n'),
+    equipements: [
+      '- Postes de transformation MT/BT',
+      '- Tableaux généraux basse tension',
+      '- Disjoncteurs et appareillage de protection',
+      '- Chemins de câbles et canalisations',
+      '- Réseaux de terre et liaisons équipotentielles'
     ].join('\n')
   },
   {
     cle: 'Installation Électrique Industrielle',
+    seo_title: "Installation électrique industrielle — SEFELEC Casablanca",
+    seo_description: "Alimentation des machines, éclairage industriel, réseaux de distribution et câblage repéré. SEFELEC réalise l'ensemble de votre lot électrique industriel.",
     name: 'Installation électrique industrielle',
     description:
       'Réalisation complète de vos installations électriques en environnement industriel.',
@@ -138,10 +211,32 @@ const SERVICES = [
       '- Câblage courant fort et courant faible',
       '- Repérage et documentation de l\'installation',
       '- Essais avant remise en exploitation'
+    ].join('\n'),
+    avantages: [
+      '- Des interventions planifiées autour de vos contraintes d\'exploitation',
+      '- Un câblage repéré, donc des dépannages plus rapides ensuite',
+      '- Une séparation nette entre courants forts et courants faibles',
+      '- Des réserves prévues pour vos ajouts de machines',
+      '- Un seul intervenant pour l\'ensemble du lot électrique'
+    ].join('\n'),
+    applications: [
+      '- Ateliers de production',
+      '- Lignes de fabrication et postes de travail',
+      '- Zones de stockage et quais de chargement',
+      '- Locaux techniques et salles de machines'
+    ].join('\n'),
+    equipements: [
+      '- Coffrets divisionnaires et départs machines',
+      '- Éclairage industriel et éclairage de sécurité',
+      '- Prises de courant industrielles',
+      '- Chemins de câbles, goulottes et conduits',
+      '- Réseaux courants faibles'
     ].join('\n')
   },
   {
     cle: 'Mise en Conformité',
+    seo_title: "Mise en conformité électrique à Casablanca — SEFELEC",
+    seo_description: "Diagnostic, relevé des non-conformités et travaux correctifs sur vos installations électriques existantes. SEFELEC S.A.R.L., Casablanca.",
     name: 'Mise en conformité des installations',
     description:
       'Diagnostic et mise en conformité de vos installations électriques existantes.',
@@ -155,6 +250,26 @@ const SERVICES = [
       '- Reprise des protections et des mises à la terre',
       '- Remise en état des armoires et des raccordements',
       '- Respect des normes et exigences du projet'
+    ].join('\n'),
+    avantages: [
+      '- Un état des lieux écrit, qui distingue l\'urgent du souhaitable',
+      '- Un chiffrage détaillé permettant d\'étaler les travaux',
+      '- Des risques électriques réduits pour vos équipes',
+      '- Une installation remise en ordre et documentée',
+      '- Des travaux organisés sans arrêter votre activité'
+    ].join('\n'),
+    applications: [
+      '- Installations anciennes ou modifiées au fil du temps',
+      '- Locaux repris ou changeant d\'usage',
+      '- Sites préparant un contrôle réglementaire',
+      '- Bâtiments après extension ou ajout de machines'
+    ].join('\n'),
+    equipements: [
+      '- Reprise des tableaux et armoires existants',
+      '- Remplacement des protections vétustes',
+      '- Mise à la terre et liaisons équipotentielles',
+      '- Repérage des circuits et étiquetage',
+      '- Remise en état des raccordements'
     ].join('\n')
   }
 ];
@@ -222,6 +337,20 @@ async function main() {
     schema: { default_value: false }
   });
 
+  // Sections de la page dédiée au service. Même format que « details ».
+  const sections = {
+    avantages: 'Ce que le client y gagne. Une ligne par point, préfixée de « - ».',
+    applications: 'Secteurs et cas d\'usage concernés. Une ligne par point.',
+    equipements: 'Équipements et solutions proposés. Une ligne par point.'
+  };
+  for (const [champ, note] of Object.entries(sections)) {
+    await assurerChamp(champ, {
+      type: 'text',
+      meta: { interface: 'input-multiline', note },
+      schema: {}
+    });
+  }
+
   // --- 2. État actuel ---
   const existants = await api('GET', '/items/services?fields=id,name,status&limit=-1');
   const parNom = new Map(existants.map((s) => [s.name, s]));
@@ -253,7 +382,12 @@ async function main() {
     const donnees = {
       name: service.name,
       description: service.description,
+      seo_title: service.seo_title,
+      seo_description: service.seo_description,
       details: service.details,
+      avantages: service.avantages,
+      applications: service.applications,
+      equipements: service.equipements,
       featured: service.featured,
       sort: service.sort,
       status: 'published'

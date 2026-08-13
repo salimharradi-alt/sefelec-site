@@ -32,7 +32,10 @@ const INCLUDE = [
   // Réception des demandes de devis : sans ce fichier, le formulaire
   // renvoie une erreur au visiteur.
   'envoi-devis.php',
-  'assets'
+  'assets',
+  // Pages dédiées produites par « npm run build » : un dossier par page.
+  'services',
+  'produits'
 ];
 
 // ---------------------------------------------------------------------------

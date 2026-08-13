@@ -739,6 +739,147 @@ img.testimonial-avatar { object-fit: cover; }
   transition: color var(--transition);
 }
 .catalog-link:hover { color: var(--red); }
+/* Devenu un lien vers la fiche produit : l'élément n'est plus un bouton,
+   mais son apparence ne doit pas changer. */
+a.catalog-link { text-decoration: none; }
+
+/* ===================================================================
+   PAGES DÉDIÉES  (/services/…, /produits/…)
+   Générées par « npm run build ». Elles réutilisent au maximum les
+   styles de la page d'accueil ; seuls les éléments qui leur sont
+   propres sont définis ici.
+=================================================================== */
+
+/* ----- Fil d'Ariane ----- */
+.fil-ariane {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border);
+  background: var(--paper);
+  font-size: 0.86rem;
+}
+.fil-ariane a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.fil-ariane a:hover { color: var(--red); }
+.fil-ariane [aria-current] { color: var(--navy-dark); font-weight: 700; }
+.fil-sep { margin: 0 8px; color: var(--border); }
+
+/* ----- Entête de page ----- */
+.page-hero {
+  padding: 64px 0 44px;
+  background: var(--paper-alt);
+}
+.page-hero h1 {
+  /* Les titres varient beaucoup en longueur d'une page à l'autre :
+     une taille fluide évite les débordements sur petit écran. */
+  font-size: clamp(1.6rem, calc(1.1rem + 2vw), 2.6rem);
+  margin: 10px 0 14px;
+}
+.page-intro {
+  max-width: 68ch;
+  font-size: 1.02rem;
+  color: var(--ink-soft);
+  margin-bottom: 24px;
+}
+.page-hero-principal {
+  background: linear-gradient(120deg, var(--navy-dark), var(--navy) 70%);
+  color: #fff;
+}
+.page-hero-principal h1,
+.page-hero-principal .page-intro { color: #fff; }
+.page-hero-principal .page-intro { color: rgba(255, 255, 255, 0.88); }
+
+/* ----- Blocs de contenu ----- */
+.page-bloc { max-width: 900px; }
+.page-bloc h2 { margin-bottom: 18px; }
+.page-bloc p { color: var(--ink-soft); margin-bottom: 14px; max-width: 68ch; }
+
+.page-points {
+  margin: 0 0 20px;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 26px;
+}
+.page-points li {
+  position: relative;
+  padding-left: 24px;
+  line-height: 1.55;
+}
+.page-points li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--red);
+}
+
+.bloc-titre {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 26px;
+}
+.lien-suite {
+  color: var(--navy);
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border-bottom: 2px solid var(--red);
+  white-space: nowrap;
+}
+.lien-suite:hover { color: var(--red); }
+
+.cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+.cta-inner .cta-actions { justify-content: center; }
+
+/* ----- Fiche produit ----- */
+.fiche-produit {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 46px;
+  align-items: start;
+}
+.fiche-visuel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--paper);
+}
+.fiche-visuel img { width: 100%; height: auto; display: block; }
+.fiche-infos h1 {
+  font-size: clamp(1.4rem, calc(1.1rem + 1.2vw), 2rem);
+  margin: 10px 0 6px;
+}
+.fiche-desc { color: var(--ink-soft); margin: 16px 0; max-width: 60ch; }
+.fiche-infos .catalog-price { font-size: 1.4rem; display: block; margin-bottom: 6px; }
+.fiche-bloc { margin-bottom: 28px; }
+.fiche-bloc:last-child { margin-bottom: 0; }
+
+/* Le lien « Lire plus » des cartes de service est devenu un lien. */
+a.service-more { text-decoration: none; display: inline-block; }
+
+@media (max-width: 900px) {
+  .fiche-produit { grid-template-columns: 1fr; gap: 28px; }
+}
+@media (max-width: 620px) {
+  /* Deux colonnes de puces deviennent illisibles sur téléphone. */
+  .page-points { grid-template-columns: 1fr; }
+  .page-hero { padding: 44px 0 32px; }
+}
 
 /* ===== Modale fiche technique ===== */
 .modal-overlay {
