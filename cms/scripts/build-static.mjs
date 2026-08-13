@@ -42,7 +42,9 @@ const BASE = 'http://localhost:5500';
 const SITE_URL = 'https://www.sefelec.ma';
 
 /** Formats générés pour chaque image, alignés sur les usages du site. */
-const PRESETS = { carte: 'carte', large: 'large', miniature: 'miniature' };
+// « logo » réduit sans recadrer : un logo de partenaire ne doit être ni
+// rogné ni étiré, contrairement aux visuels de produits.
+const PRESETS = { carte: 'carte', large: 'large', miniature: 'miniature', logo: 'logo' };
 
 // ---------------------------------------------------------------------------
 
@@ -108,7 +110,7 @@ async function main() {
     if (f.endsWith('.webp')) fs.unlinkSync(path.join(IMG_DIR, f));
   }
 
-  const [categories, products, services, testimonials, settings] = await Promise.all([
+  const [categories, products, services, testimonials, settings, partners] = await Promise.all([
     api(
       '/items/categories?fields=id,name,slug,description,seo_title,seo_description,keywords' +
         '&sort=sort,name&limit=-1'
@@ -123,7 +125,8 @@ async function main() {
         'featured,icon_svg,image,seo_title,seo_description,keywords&sort=sort,name&limit=-1'
     ),
     api('/items/testimonials?fields=id,name,role,quote,rating,photo&sort=sort&limit=-1'),
-    api('/items/site_settings')
+    api('/items/site_settings'),
+    api('/items/partners?fields=id,name,logo,website,description,image_alt&sort=sort,name&limit=-1')
   ]);
 
   console.log(
@@ -178,6 +181,38 @@ async function main() {
     });
   }
 
+  // --- Partenaires ---
+  // Un partenaire sans logo n'a rien à afficher : il est ignoré plutôt
+  // que rendu sous forme de case vide.
+  const exportedPartners = [];
+  for (const p of partners || []) {
+    const logo = await fetchImage(p.logo, PRESETS.logo);
+    if (!logo) {
+      console.warn(`  ! partenaire « ${p.name} » sans logo, ignoré`);
+      continue;
+    }
+
+    // Seule une adresse http(s) devient un lien. Une valeur mal saisie
+    // produirait un lien mort, ou pire un lien relatif vers le site.
+    const site = String(p.website || '').trim();
+    const lien = /^https?:\/\//i.test(site) ? site : null;
+    if (site && !lien) {
+      console.warn(`  ! partenaire « ${p.name} » : adresse ignorée (${site})`);
+    }
+
+    exportedPartners.push({
+      id: p.id,
+      name: p.name,
+      logo,
+      website: lien,
+      description: p.description || '',
+      alt: p.image_alt || `Logo ${p.name} — partenaire de SEFELEC`
+    });
+  }
+  if (exportedPartners.length) {
+    console.log(`\n— ${exportedPartners.length} partenaire(s) —`);
+  }
+
   // --- Catégories ---
   const labels = {};
   categories.forEach((c) => {
@@ -208,7 +243,8 @@ async function main() {
       featured: Boolean(s.featured),
       icon_svg: s.icon_svg || ''
     })),
-    testimonials: exportedTestimonials
+    testimonials: exportedTestimonials,
+    partners: exportedPartners
   };
 
   const out = path.join(DATA_DIR, 'content.json');

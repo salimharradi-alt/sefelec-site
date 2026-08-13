@@ -1118,6 +1118,71 @@ a.service-more { text-decoration: none; display: inline-block; }
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
+
+/* ===== Nos partenaires =====
+   Grille auto-adaptative : le nombre de colonnes découle de la largeur
+   disponible, sans palier à écrire pour chaque taille d'écran. Elle
+   s'ajuste donc aussi bien à 3 partenaires qu'à 20. */
+.partners-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 18px;
+}
+.partner-card {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.partner-card:hover {
+  border-color: rgba(224, 17, 21, 0.35);
+  box-shadow: var(--shadow-sm);
+}
+.partner-card > a,
+.partner-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 100%;
+  padding: 22px 16px;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+}
+/* « contain » est le cœur du dispositif : le logo est réduit pour tenir
+   dans la boîte en conservant ses proportions. Ni rogné, ni étiré,
+   qu'il soit carré, large ou vertical. */
+.partner-card img {
+  width: 100%;
+  max-width: 150px;
+  height: 62px;
+  object-fit: contain;
+  object-position: center;
+}
+.partner-name {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--navy-dark);
+  line-height: 1.3;
+}
+.partner-desc {
+  font-size: 0.76rem;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+.partner-card > a:hover .partner-name { color: var(--red); }
+
+@media (max-width: 560px) {
+  /* Deux logos par ligne restent lisibles sur téléphone ; un seul
+     étirerait la section sur une hauteur inutile. */
+  .partners-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .partner-card img { height: 52px; }
+}
 .testimonial-card {
   background: var(--paper);
   border-radius: var(--radius);
@@ -1396,7 +1461,8 @@ a.service-more { text-decoration: none; display: inline-block; }
 .catalog-grid > *,
 .services-grid > *,
 .why-grid > *,
-.testimonials-grid > * {
+.testimonials-grid > *,
+.partners-grid > * {
   min-width: 0;
 }
 

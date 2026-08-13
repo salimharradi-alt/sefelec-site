@@ -285,6 +285,47 @@ function renderTestimonials() {
 }
 
 // ===========================================================================
+// Partenaires
+// ===========================================================================
+const partnersSection = document.getElementById('partenaires');
+const partnersGrid = document.getElementById('partnersGrid');
+
+function renderPartners() {
+  // Sans partenaire publié, la section entière disparaît plutôt que
+  // d'afficher un titre suivi d'un vide.
+  if (!PARTNERS.length) {
+    partnersSection.hidden = true;
+    return;
+  }
+  partnersSection.hidden = false;
+
+  partnersGrid.innerHTML = PARTNERS.map(p => {
+    // Les dimensions déclarées réservent la place avant le chargement :
+    // la page ne « saute » pas. object-fit: contain (CSS) garantit que
+    // le logo n'est jamais déformé, quelles que soient ses proportions.
+    const logo = `<img src="${escapeHtml(p.logo)}" alt="${escapeHtml(p.alt)}"
+        loading="lazy" decoding="async" width="200" height="100">`;
+
+    const legende = `
+        <span class="partner-name">${escapeHtml(p.name)}</span>
+        ${p.description ? `<span class="partner-desc">${escapeHtml(p.description)}</span>` : ''}`;
+
+    // Lien uniquement si une adresse officielle a été renseignée.
+    // « noopener noreferrer » empêche le site visité d'accéder à notre
+    // fenêtre ; l'ouverture dans un onglet distinct évite de faire
+    // quitter le site au visiteur.
+    const contenu = p.website
+      ? `<a href="${escapeHtml(p.website)}" target="_blank" rel="noopener noreferrer"
+            aria-label="${escapeHtml(p.name)} — ouvrir le site officiel (nouvel onglet)">
+           ${logo}${legende}
+         </a>`
+      : `<div class="partner-inner">${logo}${legende}</div>`;
+
+    return `<li class="partner-card">${contenu}</li>`;
+  }).join('');
+}
+
+// ===========================================================================
 // Coordonnées et identité (paramètres du site)
 // ===========================================================================
 
@@ -439,6 +480,9 @@ function showLoadError() {
   catalogGrid.innerHTML = message;
   servicesGrid.innerHTML = message;
   testimonialsGrid.innerHTML = message;
+  // La section partenaires est simplement masquée : y afficher un
+  // message d'erreur n'apprendrait rien au visiteur.
+  partnersSection.hidden = true;
 }
 
 async function init() {
@@ -455,6 +499,7 @@ async function init() {
   renderFilters();
   renderCatalog(activeFilter);
   renderTestimonials();
+  renderPartners();
 
   // Le panier n'a pu être validé qu'une fois le catalogue connu
   pruneCart();

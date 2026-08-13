@@ -17,6 +17,7 @@ let catalog = [];
 let catalogLabels = {};
 let SERVICES = [];
 let TESTIMONIALS = [];
+let PARTNERS = [];
 let SETTINGS = {};
 
 // Valeurs de repli tant que le contenu n'est pas chargé
@@ -44,6 +45,7 @@ async function loadAllData() {
   catalogLabels = content.categories || {};
   SERVICES = content.services || [];
   TESTIMONIALS = content.testimonials || [];
+  PARTNERS = content.partners || [];
   SETTINGS = content.settings || {};
 
   // Paramètres commerciaux pilotés depuis le back-office
@@ -53,5 +55,5 @@ async function loadAllData() {
     SHIPPING_FREE_THRESHOLD = Number(SETTINGS.shipping_free_threshold);
   }
 
-  return { catalog, catalogLabels, SERVICES, TESTIMONIALS, SETTINGS };
+  return { catalog, catalogLabels, SERVICES, TESTIMONIALS, PARTNERS, SETTINGS };
 }
