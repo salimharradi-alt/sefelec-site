@@ -20,6 +20,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 
 import {
   pageServices,
@@ -313,6 +314,66 @@ async function main() {
     }
   }
   console.log(`  /produits/ + ${categoriesUtiles.length} catégories + ${nbFiches} fiches produit`);
+
+  // --- Empreinte des feuilles de style et des scripts ---
+  //
+  // .htaccess demande aux navigateurs de garder ces fichiers 7 jours.
+  // Sans cela le site serait lent, mais après une mise à jour un
+  // visiteur déjà venu exécutait l'ancien JavaScript avec le nouveau
+  // contenu : la section Partenaires restait masquée chez lui alors
+  // qu'elle s'affichait chez un nouveau venu. Le cas s'est produit.
+  //
+  // On ajoute donc à chaque adresse une empreinte de son contenu. Elle
+  // ne change que si le fichier change — le cache reste donc pleinement
+  // efficace — mais le navigateur voit alors une adresse inédite et va
+  // chercher la nouvelle version. Le HTML, lui, est servi sans cache.
+  const empreintes = new Map();
+  for (const rel of ['assets/css/style.css', 'assets/js/store.js', 'assets/js/cart.js', 'assets/js/script.js']) {
+    const abs = path.join(SITE_ROOT, rel);
+    if (!fs.existsSync(abs)) continue;
+    const hash = crypto.createHash('sha1').update(fs.readFileSync(abs)).digest('hex').slice(0, 8);
+    empreintes.set(rel, hash);
+  }
+
+  function estampiller(html) {
+    for (const [rel, hash] of empreintes) {
+      const nom = rel.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      // Le chemin peut être relatif (accueil) ou absolu (pages générées) :
+      // la barre initiale est capturée puis restituée telle quelle.
+      // L'empreinte déjà posée est reprise, ce qui rend l'opération
+      // idempotente — un second build ne l'empile pas.
+      html = html.replace(
+        new RegExp(`(["'])(/?)${nom}(?:\\?v=[^"']*)?\\1`, 'g'),
+        (_, guillemet, barre) => `${guillemet}${barre}${rel}?v=${hash}${guillemet}`
+      );
+    }
+    return html;
+  }
+
+  for (const page of ['index.html', '404.html']) {
+    const abs = path.join(SITE_ROOT, page);
+    if (!fs.existsSync(abs)) continue;
+    const avant = fs.readFileSync(abs, 'utf8');
+    const apres = estampiller(avant);
+    if (apres !== avant) fs.writeFileSync(abs, apres, 'utf8');
+  }
+
+  // Les pages générées portent la même empreinte.
+  for (const dossier of ['services', 'produits']) {
+    const racine = path.join(SITE_ROOT, dossier);
+    if (!fs.existsSync(racine)) continue;
+    const parcourir = (d) => {
+      for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+        const p = path.join(d, e.name);
+        if (e.isDirectory()) parcourir(p);
+        else if (e.name === 'index.html') {
+          fs.writeFileSync(p, estampiller(fs.readFileSync(p, 'utf8')), 'utf8');
+        }
+      }
+    };
+    parcourir(racine);
+  }
+  console.log(`  empreintes posées sur ${empreintes.size} fichier(s) statique(s)`);
 
   // --- Sitemap ---
   const today = new Date().toISOString().slice(0, 10);
