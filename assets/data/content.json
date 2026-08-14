@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-13T15:05:47.059Z",
+  "generatedAt": "2026-08-14T09:53:07.938Z",
   "settings": {
     "id": "692fc7e7-c2a4-4328-bd1d-3ebe1b3d0661",
     "site_name": "SEFELEC S.A.R.L.",
@@ -444,7 +444,7 @@
     {
       "id": "78ecb5a1-ab59-4094-b8ce-fdfd1f24ad95",
       "name": "BUTEC",
-      "logo": "assets/images/content/9e50ad59-3ec7-4b0b-b68b-18953993f1fb-logo.webp",
+      "logo": "assets/images/content/c27a49c3-6877-4888-9b0a-ec99f461ed5d-logo.webp",
       "website": "https://www.butec.com",
       "description": "",
       "alt": "Logo BUTEC — partenaire de SEFELEC"
@@ -453,14 +453,14 @@
       "id": "202122cf-c0cb-4754-a53a-492b2b54aa68",
       "name": "Cegelec",
       "logo": "assets/images/content/6ab8cc20-441f-4f33-ac71-2a614ed5b2f7-logo.webp",
-      "website": null,
+      "website": "https://www.cegelec-cem.fr/",
       "description": "",
       "alt": "Logo Cegelec — partenaire de SEFELEC"
     },
     {
       "id": "a2704606-a74c-4ce9-b7af-c0b68c026bfa",
       "name": "Mondelēz International",
-      "logo": "assets/images/content/12482abc-6856-4dd6-9d53-d3defed92f52-logo.webp",
+      "logo": "assets/images/content/7503b1d8-b70a-41d3-96f5-d751a08542a4-logo.webp",
       "website": "https://www.mondelezinternational.com",
       "description": "",
       "alt": "Logo Mondelēz International — partenaire de SEFELEC"
@@ -468,15 +468,15 @@
     {
       "id": "74455d0c-8aed-49c8-abf9-5ca49570f3f9",
       "name": "PLASTIMA",
-      "logo": "assets/images/content/ed4ca538-c39e-4285-a54a-2a39b40c0e6e-logo.webp",
-      "website": null,
+      "logo": "assets/images/content/c7828c5a-5e23-492c-8a55-d71d9436f788-logo.webp",
+      "website": "https://plastimacanalisations.com/",
       "description": "",
       "alt": "Logo PLASTIMA — partenaire de SEFELEC"
     },
     {
       "id": "2d2a4875-84e1-46e8-908a-bc6b2960d3f6",
       "name": "Siemens Healthineers",
-      "logo": "assets/images/content/023a0293-e042-4647-8c3a-1268690c499e-logo.webp",
+      "logo": "assets/images/content/3de959f6-5083-4a2e-8b3e-fe52f55a5d39-logo.webp",
       "website": "https://www.siemens-healthineers.com",
       "description": "",
       "alt": "Logo Siemens Healthineers — partenaire de SEFELEC"
