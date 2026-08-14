@@ -98,6 +98,32 @@ jobs:
             **/*.zip
             **/*.pdf
 
+      # Sans ce contrôle, un transfert vers le mauvais dossier réussit
+      # sans rien publier : le workflow s'affichait au vert alors que le
+      # site en ligne restait inchangé. Le cas s'est produit.
+      - name: Vérifier que le site en ligne a bien changé
+        run: |
+          SITE="${{ secrets.SITE_URL || 'https://www.sefelec.ma' }}"
+          echo "Contrôle sur $SITE"
+
+          # On laisse le temps au serveur d'exposer les fichiers.
+          sleep 20
+
+          attendu=$(grep -c '<loc>' sitemap.xml)
+          enligne=$(curl -s --max-time 30 "$SITE/sitemap.xml" | grep -c '<loc>' || echo 0)
+
+          echo "Adresses attendues : $attendu"
+          echo "Adresses en ligne  : $enligne"
+
+          if [ "$enligne" -ne "$attendu" ]; then
+            echo "::error::Le transfert s'est terminé sans erreur, mais le site en ligne n'a pas changé."
+            echo "Cause la plus fréquente : le secret FTP_DIRECTORY ne désigne pas la racine du site."
+            echo "Si le compte FTP a déjà public_html pour dossier de départ, FTP_DIRECTORY doit valoir ./"
+            exit 1
+          fi
+
+          echo "Le site en ligne correspond au dépôt."
+
       - name: Récapitulatif
         run: |
           echo "### Publication terminée :rocket:" >> $GITHUB_STEP_SUMMARY
