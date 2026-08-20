@@ -3,11 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Applique le thème choisi avant la première peinture, pour que la
+     page d'erreur ne soit pas la seule à s'afficher en clair. -->
+<script>
+(function(){try{var c=localStorage.getItem('sefelec_theme');
+document.documentElement.setAttribute('data-theme',c||((window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'));
+}catch(e){document.documentElement.setAttribute('data-theme','light');}})();
+</script>
 <title>Page introuvable — SEFELEC S.A.R.L.</title>
 <!-- Une page d'erreur ne doit jamais être indexée. -->
 <meta name="robots" content="noindex, follow">
 <link rel="icon" href="/assets/images/favicon.png" type="image/png">
-<link rel="stylesheet" href="/assets/css/style.css?v=69d3fa5f">
+<link rel="stylesheet" href="/assets/css/style.css?v=a7829087">
 <style>
   .error-page {
     min-height: 70vh;

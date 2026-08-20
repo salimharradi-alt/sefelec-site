@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Thème clair/sombre — doit rester en ligne et en tête : ce script
+     s'exécute avant la première peinture. Un fichier externe arriverait
+     après, et le visiteur en thème sombre verrait un éclair blanc. -->
+<script>
+(function(){try{var c=localStorage.getItem('sefelec_theme');
+document.documentElement.setAttribute('data-theme',c||((window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'));
+}catch(e){document.documentElement.setAttribute('data-theme','light');}})();
+</script>
+
 <title>Câble industriel blindé RO2V 5G6 mm² — SEFELEC</title>
 <meta name="description" content="Câble énergie souple pour environnements industriels exigeants, forte tenue mécanique.">
 
@@ -26,7 +35,7 @@
 
 <meta name="theme-color" content="#1E3A8A">
 <link rel="icon" href="/assets/images/logo-icon.png" type="image/png">
-<link rel="stylesheet" href="/assets/css/style.css?v=69d3fa5f">
+<link rel="stylesheet" href="/assets/css/style.css?v=a7829087">
 
 <script type="application/ld+json">
 {
@@ -164,6 +173,13 @@
     </a>
     <a href="/#contactForm" class="btn btn-primary header-cta">Demander un devis</a>
 
+
+    <button type="button" class="theme-toggle" aria-pressed="false" aria-label="Passer au thème sombre" title="Thème sombre">
+      <svg class="icone-claire" viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.5v2.2M12 19.3v2.2M4.2 12H2M22 12h-2.2M5.6 5.6 4 4M20 20l-1.6-1.6M18.4 5.6 20 4M4 20l1.6-1.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      <svg class="icone-sombre" viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><path d="M20 13.4A8.2 8.2 0 0 1 10.6 4a8.4 8.4 0 1 0 9.4 9.4Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+      <span class="theme-toggle-libelle">Thème sombre</span>
+    </button>
+
     <button class="burger" id="burger" aria-label="Ouvrir le menu">
       <span></span><span></span><span></span>
     </button>
@@ -178,6 +194,11 @@
     <a href="/#contact">Contact</a>
     <a href="tel:+212665841807" class="btn btn-outline">06 65 84 18 07</a>
     <a href="/#contactForm" class="btn btn-primary">Demander un devis</a>
+    <button type="button" class="theme-toggle" aria-pressed="false" aria-label="Passer au thème sombre" title="Thème sombre">
+      <svg class="icone-claire" viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.5v2.2M12 19.3v2.2M4.2 12H2M22 12h-2.2M5.6 5.6 4 4M20 20l-1.6-1.6M18.4 5.6 20 4M4 20l1.6-1.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      <svg class="icone-sombre" viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><path d="M20 13.4A8.2 8.2 0 0 1 10.6 4a8.4 8.4 0 1 0 9.4 9.4Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+      <span class="theme-toggle-libelle">Thème sombre</span>
+    </button>
   </div>
 </header>
 <nav class="fil-ariane" aria-label="Fil d'Ariane"><div class="container"><a href="/">Accueil</a><span class="fil-sep" aria-hidden="true">›</span><a href="/produits/">Produits</a><span class="fil-sep" aria-hidden="true">›</span><a href="/produits/cables/">Câbles &amp; conducteurs</a><span class="fil-sep" aria-hidden="true">›</span><span aria-current="page">Câble industriel blindé RO2V 5G6 mm²</span></div></nav>
@@ -296,6 +317,7 @@
   </div>
 </footer>
 
+<script src="/assets/js/theme.js?v=59eb1dc5"></script>
 <script>
   // Menu mobile : seul comportement nécessaire sur ces pages.
   var burger = document.getElementById('burger');

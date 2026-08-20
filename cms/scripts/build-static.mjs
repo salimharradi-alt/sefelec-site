@@ -328,7 +328,13 @@ async function main() {
   // efficace — mais le navigateur voit alors une adresse inédite et va
   // chercher la nouvelle version. Le HTML, lui, est servi sans cache.
   const empreintes = new Map();
-  for (const rel of ['assets/css/style.css', 'assets/js/store.js', 'assets/js/cart.js', 'assets/js/script.js']) {
+  for (const rel of [
+    'assets/css/style.css',
+    'assets/js/theme.js',
+    'assets/js/store.js',
+    'assets/js/cart.js',
+    'assets/js/script.js'
+  ]) {
     const abs = path.join(SITE_ROOT, rel);
     if (!fs.existsSync(abs)) continue;
     const hash = crypto.createHash('sha1').update(fs.readFileSync(abs)).digest('hex').slice(0, 8);

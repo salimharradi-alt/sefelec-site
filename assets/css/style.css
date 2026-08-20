@@ -3,22 +3,39 @@
    Palette : #1E3A8A (bleu marine) / #E53935 (rouge) / #FFFFFF / #F5F5F5
 =================================================== */
 
+/* --------------------------------------------------------------
+   THÈME
+   Le thème clair est défini sur :root, le thème sombre redéfinit les
+   mêmes variables sous [data-theme="dark"]. Aucune règle n'est donc
+   écrite deux fois.
+
+   Distinction importante : les couleurs de MARQUE (--navy, --navy-dark)
+   ne changent pas d'un thème à l'autre. Elles servent de fond aux
+   sections sombres — accueil, « pourquoi nous », bandeau d'appel,
+   pied de page — qui restent volontairement sombres dans les deux
+   thèmes. Les faire basculer les aurait éclaircies.
+   La couleur des TITRES est portée par --heading, qui bascule.
+-------------------------------------------------------------- */
 :root {
+  /* Marque — identiques dans les deux thèmes */
   --navy: #1E3A8A;
   --navy-dark: #13265A;
   --navy-darker: #0C1737;
-  --navy-light: #EAF0FB;
   --navy-soft: #4A5F9E;
-
   --red: #E53935;
   --red-dark: #C62828;
-  --red-light: #FDECEA;
 
+  /* Surfaces et textes — basculent */
+  --navy-light: #EAF0FB;
+  --red-light: #FDECEA;
   --ink: #10192B;
   --ink-soft: #4A5568;
+  --heading: #13265A;
+  --accent-link: #1E3A8A;
   --paper: #FFFFFF;
   --paper-alt: #F5F5F5;
   --border: #E4E8F0;
+  --header-bg: rgba(255, 255, 255, 0.92);
 
   --radius: 14px;
   --shadow-sm: 0 2px 10px rgba(19, 38, 90, 0.06);
@@ -26,8 +43,50 @@
   --transition: 0.25s ease;
 }
 
+/* Thème sombre. Les contrastes ont été choisis au-dessus des seuils
+   d'accessibilité : #E6EAF2 sur #101828 dépasse 14:1, et le gris de
+   texte secondaire #A3AEC2 reste au-dessus de 7:1. */
+[data-theme="dark"] {
+  --navy-light: #1B2A4E;
+  --red-light: #3A1416;
+  --ink: #E6EAF2;
+  --ink-soft: #A3AEC2;
+  --heading: #F1F4FA;
+  --accent-link: #8AB0FF;
+  --paper: #101828;
+  --paper-alt: #0B1120;
+  --border: #26314A;
+  --header-bg: rgba(16, 24, 40, 0.92);
+
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+
+/* Indique au navigateur d'accorder ses propres éléments — barres de
+   défilement, champs natifs — au thème courant. */
+:root { color-scheme: light; }
+[data-theme="dark"] { color-scheme: dark; }
+
+/* Transition douce au basculement, sans animer la première peinture.
+   La classe est posée par le script juste avant de changer de thème,
+   puis retirée : sans cela, chaque survol de carte hériterait aussi de
+   cette transition et l'interface paraîtrait molle. */
+.theme-en-transition,
+.theme-en-transition *,
+.theme-en-transition *::before,
+.theme-en-transition *::after {
+  transition: background-color 0.28s ease, color 0.28s ease,
+              border-color 0.28s ease, fill 0.28s ease !important;
+}
+
+/* Respecte le réglage système « animations réduites ». */
+@media (prefers-reduced-motion: reduce) {
+  .theme-en-transition,
+  .theme-en-transition * { transition: none !important; }
+}
 
 body {
   margin: 0;
@@ -53,7 +112,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .text-white { color: #fff; }
 .text-white-70 { color: rgba(255,255,255,0.7); }
 
-h1, h2, h3, h4 { line-height: 1.2; margin: 0 0 16px; font-weight: 800; color: var(--navy-dark); }
+h1, h2, h3, h4 { line-height: 1.2; margin: 0 0 16px; font-weight: 800; color: var(--heading); }
 h1 { font-size: clamp(2.2rem, 4.5vw, 3.4rem); }
 h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); }
 h3 { font-size: 1.2rem; }
@@ -122,8 +181,8 @@ p { margin: 0 0 16px; color: var(--ink-soft); }
 .btn-primary:hover { box-shadow: 0 12px 26px rgba(229, 57, 53, 0.42); }
 .btn-outline {
   background: transparent;
-  border-color: var(--navy);
-  color: var(--navy);
+  border-color: var(--accent-link);
+  color: var(--accent-link);
 }
 .btn-outline:hover { background: var(--navy); color: #fff; }
 .btn-outline-light {
@@ -151,7 +210,7 @@ p { margin: 0 0 16px; color: var(--ink-soft); }
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--header-bg);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
   transition: box-shadow var(--transition);
@@ -171,7 +230,7 @@ p { margin: 0 0 16px; color: var(--ink-soft); }
   gap: 10px;
   font-weight: 800;
   font-size: 1.1rem;
-  color: var(--navy-dark);
+  color: var(--heading);
   flex-shrink: 0;
 }
 .logo-img {
@@ -211,7 +270,7 @@ p { margin: 0 0 16px; color: var(--ink-soft); }
   gap: 8px;
   font-weight: 700;
   font-size: 0.88rem;
-  color: var(--navy);
+  color: var(--accent-link);
   flex-shrink: 0;
 }
 .header-phone svg { color: var(--red); }
@@ -243,7 +302,7 @@ p { margin: 0 0 16px; color: var(--ink-soft); }
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--navy);
+  color: var(--accent-link);
   opacity: 0.25;
 }
 
@@ -260,12 +319,62 @@ img.testimonial-avatar { object-fit: cover; }
   border-radius: 10px;
   border: 1px solid var(--border);
   background: var(--paper);
-  color: var(--navy-dark);
+  color: var(--heading);
   cursor: pointer;
   flex-shrink: 0;
   transition: border-color var(--transition), color var(--transition);
 }
-.cart-toggle:hover { border-color: var(--navy); color: var(--navy); }
+
+/* ===== Bascule clair / sombre =====
+   Reprend exactement la forme du bouton panier voisin : même taille,
+   même rayon, même bordure. Le bouton s'intègre ainsi à l'en-tête sans
+   y introduire une forme nouvelle. */
+.theme-toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--paper);
+  color: var(--heading);
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+  transition: border-color var(--transition), color var(--transition);
+}
+.theme-toggle:hover { border-color: var(--accent-link); color: var(--accent-link); }
+[data-theme="dark"] .theme-toggle:hover { border-color: var(--red); color: var(--red); }
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+
+/* Seule l'icône du thème courant existe dans la page.
+   Le choix de « display » plutôt que « opacity » est délibéré : une
+   icône rendue transparente resterait présente dans la mise en page et
+   continuerait de capter les clics. Ici, une seule est rendue. */
+.theme-toggle .icone-sombre { display: none; }
+[data-theme="dark"] .theme-toggle .icone-claire { display: none; }
+[data-theme="dark"] .theme-toggle .icone-sombre { display: block; }
+
+/* Dans le menu mobile, le bouton prend toute la largeur et s'accompagne
+   de son libellé : une icône seule y serait peu lisible. */
+.nav-mobile .theme-toggle {
+  width: 100%;
+  height: auto;
+  gap: 10px;
+  padding: 12px;
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.92rem;
+  border-radius: 999px;
+}
+.theme-toggle-libelle { display: none; }
+.nav-mobile .theme-toggle-libelle { display: inline; }
+.cart-toggle:hover { border-color: var(--accent-link); color: var(--accent-link); }
 .cart-count {
   position: absolute;
   top: -7px;
@@ -312,7 +421,7 @@ img.testimonial-avatar { object-fit: cover; }
   gap: 4px;
   padding: 12px 24px 20px;
   border-top: 1px solid var(--border);
-  background: #fff;
+  background: var(--paper);
 }
 .nav-mobile.open { display: flex; }
 .nav-mobile a {
@@ -474,7 +583,7 @@ img.testimonial-avatar { object-fit: cover; }
   width: 52px; height: 52px;
   border-radius: 12px;
   background: var(--navy-light);
-  color: var(--navy);
+  color: var(--accent-link);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -509,7 +618,7 @@ img.testimonial-avatar { object-fit: cover; }
   font: inherit;
   font-size: 0.88rem;
   font-weight: 700;
-  color: var(--navy);
+  color: var(--accent-link);
   cursor: pointer;
   border-bottom: 2px solid var(--red);
   transition: color var(--transition);
@@ -640,10 +749,10 @@ img.testimonial-avatar { object-fit: cover; }
   cursor: pointer;
   transition: background var(--transition), color var(--transition), border-color var(--transition);
 }
-.filter-btn:hover { border-color: var(--navy); color: var(--navy); }
+.filter-btn:hover { border-color: var(--accent-link); color: var(--accent-link); }
 .filter-btn.active {
   background: var(--navy);
-  border-color: var(--navy);
+  border-color: var(--accent-link);
   color: #fff;
 }
 
@@ -713,7 +822,7 @@ img.testimonial-avatar { object-fit: cover; }
   display: block;
   font-size: 1.15rem;
   font-weight: 800;
-  color: var(--navy-dark);
+  color: var(--heading);
   margin-bottom: 14px;
 }
 .catalog-actions {
@@ -732,7 +841,7 @@ img.testimonial-avatar { object-fit: cover; }
   background: none;
   border: none;
   padding: 0;
-  color: var(--navy);
+  color: var(--accent-link);
   font-weight: 700;
   font-size: 0.88rem;
   cursor: pointer;
@@ -763,7 +872,7 @@ a.catalog-link { text-decoration: none; }
   transition: color var(--transition);
 }
 .fil-ariane a:hover { color: var(--red); }
-.fil-ariane [aria-current] { color: var(--navy-dark); font-weight: 700; }
+.fil-ariane [aria-current] { color: var(--heading); font-weight: 700; }
 .fil-sep { margin: 0 8px; color: var(--border); }
 
 /* ----- Entête de page ----- */
@@ -829,7 +938,7 @@ a.catalog-link { text-decoration: none; }
   margin-bottom: 26px;
 }
 .lien-suite {
-  color: var(--navy);
+  color: var(--accent-link);
   font-weight: 700;
   font-size: 0.9rem;
   text-decoration: none;
@@ -945,13 +1054,13 @@ a.service-more { text-decoration: none; display: inline-block; }
 }
 .modal-header h3 { margin: 0; }
 .modal-desc { font-size: 0.95rem; }
-.modal-subtitle { font-size: 1rem; color: var(--navy-dark); margin: 20px 0 10px; }
+.modal-subtitle { font-size: 1rem; color: var(--heading); margin: 20px 0 10px; }
 .spec-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
 .spec-table tr { border-bottom: 1px solid var(--border); }
 .spec-table tr:last-child { border-bottom: none; }
 .spec-table th, .spec-table td { text-align: left; padding: 10px 4px; font-size: 0.9rem; font-weight: 400; }
 .spec-table th { color: var(--ink-soft); font-weight: 600; width: 55%; }
-.spec-table td { color: var(--navy-dark); font-weight: 700; }
+.spec-table td { color: var(--heading); font-weight: 700; }
 .modal-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 .modal-actions .btn { flex: 1 1 200px; }
 
@@ -1021,7 +1130,7 @@ a.service-more { text-decoration: none; display: inline-block; }
 }
 .cart-item-photo img { width: 100%; height: 100%; object-fit: cover; }
 .cart-item-info { display: flex; flex-direction: column; gap: 2px; }
-.cart-item-info h4 { margin: 0; font-size: 0.9rem; color: var(--navy-dark); line-height: 1.3; }
+.cart-item-info h4 { margin: 0; font-size: 0.9rem; color: var(--heading); line-height: 1.3; }
 .cart-item-ref { font-size: 0.72rem; color: var(--ink-soft); }
 .cart-item-price { font-size: 0.78rem; color: var(--ink-soft); }
 .cart-item-controls {
@@ -1044,7 +1153,7 @@ a.service-more { text-decoration: none; display: inline-block; }
   height: 20px;
   border: none;
   background: none;
-  color: var(--navy);
+  color: var(--accent-link);
   font-size: 1rem;
   font-weight: 700;
   line-height: 1;
@@ -1052,7 +1161,7 @@ a.service-more { text-decoration: none; display: inline-block; }
 }
 .qty-btn:hover { color: var(--red); }
 .qty-value { font-size: 0.85rem; font-weight: 700; min-width: 14px; text-align: center; }
-.cart-item-subtotal { font-size: 0.9rem; font-weight: 800; color: var(--navy-dark); }
+.cart-item-subtotal { font-size: 0.9rem; font-weight: 800; color: var(--heading); }
 .cart-item-remove {
   border: none;
   background: none;
@@ -1082,7 +1191,7 @@ a.service-more { text-decoration: none; display: inline-block; }
 .cart-total-row-final {
   font-size: 1.05rem;
   font-weight: 800;
-  color: var(--navy-dark);
+  color: var(--heading);
   padding-top: 8px;
   border-top: 1px solid var(--border);
   margin-bottom: 0;
@@ -1176,7 +1285,7 @@ a.service-more { text-decoration: none; display: inline-block; }
 .partner-name {
   font-size: 0.86rem;
   font-weight: 700;
-  color: var(--navy-dark);
+  color: var(--heading);
   line-height: 1.3;
 }
 .partner-desc {
@@ -1227,7 +1336,7 @@ a.service-more { text-decoration: none; display: inline-block; }
   justify-content: center;
   flex-shrink: 0;
 }
-.testimonial-card figcaption strong { display: block; font-size: 0.9rem; color: var(--navy-dark); }
+.testimonial-card figcaption strong { display: block; font-size: 0.9rem; color: var(--heading); }
 .testimonial-card figcaption small { color: var(--ink-soft); font-size: 0.78rem; }
 
 /* ===== CTA band ===== */
@@ -1261,7 +1370,7 @@ a.service-more { text-decoration: none; display: inline-block; }
   justify-content: center;
   flex-shrink: 0;
 }
-.info-item div strong { display: block; color: var(--navy-dark); font-size: 0.95rem; }
+.info-item div strong { display: block; color: var(--heading); font-size: 0.95rem; }
 .info-item div span { color: var(--ink-soft); font-size: 0.92rem; }
 
 .map-embed {
@@ -1288,7 +1397,7 @@ a.service-more { text-decoration: none; display: inline-block; }
   display: block;
   font-size: 0.85rem;
   font-weight: 700;
-  color: var(--navy-dark);
+  color: var(--heading);
   margin-bottom: 6px;
 }
 .field input, .field textarea {
@@ -1296,7 +1405,7 @@ a.service-more { text-decoration: none; display: inline-block; }
   padding: 12px 14px;
   border-radius: 10px;
   border: 1px solid var(--border);
-  background: #fff;
+  background: var(--paper);
   font: inherit;
   color: var(--ink);
   resize: vertical;
@@ -1304,7 +1413,7 @@ a.service-more { text-decoration: none; display: inline-block; }
 }
 .field input:focus, .field textarea:focus {
   outline: none;
-  border-color: var(--navy);
+  border-color: var(--accent-link);
   box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15);
 }
 .form-note {

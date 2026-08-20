@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Thème clair/sombre — doit rester ici, en ligne et en tête.
+     Ce script s'exécute avant la première peinture : un fichier externe
+     arriverait après, et le visiteur en thème sombre verrait un éclair
+     blanc au chargement. Ordre de décision : choix enregistré, puis
+     réglage du système, puis thème clair. -->
+<script>
+(function(){try{var c=localStorage.getItem('sefelec_theme');
+document.documentElement.setAttribute('data-theme',c||((window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'));
+}catch(e){document.documentElement.setAttribute('data-theme','light');}})();
+</script>
+
 <!-- ===================================================================
      RÉFÉRENCEMENT
      Si votre domaine n'est pas www.sefelec.ma, remplacez-le partout
@@ -42,7 +53,7 @@
 
 <link rel="icon" href="assets/images/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="assets/images/logo-icon.png">
-<link rel="stylesheet" href="assets/css/style.css?v=69d3fa5f">
+<link rel="stylesheet" href="assets/css/style.css?v=a7829087">
 
 <!-- Données structurées : aide les moteurs à comprendre l'activité,
      et permet l'affichage enrichi dans les résultats de recherche. -->
@@ -107,6 +118,12 @@
     </a>
     <a href="#contactForm" class="btn btn-primary header-cta">Demander un devis</a>
 
+    <button type="button" class="theme-toggle" aria-pressed="false" aria-label="Passer au thème sombre" title="Thème sombre">
+      <svg class="icone-claire" viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.5v2.2M12 19.3v2.2M4.2 12H2M22 12h-2.2M5.6 5.6 4 4M20 20l-1.6-1.6M18.4 5.6 20 4M4 20l1.6-1.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      <svg class="icone-sombre" viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><path d="M20 13.4A8.2 8.2 0 0 1 10.6 4a8.4 8.4 0 1 0 9.4 9.4Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+      <span class="theme-toggle-libelle">Thème sombre</span>
+    </button>
+
     <button class="cart-toggle" id="cartToggle" aria-label="Ouvrir le panier">
       <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M3 4H5L6.5 15.5C6.6 16.3 7.3 17 8.2 17H18C18.8 17 19.5 16.4 19.7 15.6L21.3 8.6C21.5 7.8 20.9 7 20.1 7H6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="20.5" r="1.4" fill="currentColor"/><circle cx="17.5" cy="20.5" r="1.4" fill="currentColor"/></svg>
       <span class="cart-count" id="cartCount">0</span>
@@ -127,6 +144,11 @@
     <a href="#contact">Contact</a>
     <a href="tel:+212665841807" data-setting-tel="phone_1" data-setting="phone_1" class="btn btn-outline">06 65 84 18 07</a>
     <a href="#contactForm" class="btn btn-primary">Demander un devis</a>
+    <button type="button" class="theme-toggle" aria-pressed="false" aria-label="Passer au thème sombre">
+      <svg class="icone-claire" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.5v2.2M12 19.3v2.2M4.2 12H2M22 12h-2.2M5.6 5.6 4 4M20 20l-1.6-1.6M18.4 5.6 20 4M4 20l1.6-1.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      <svg class="icone-sombre" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path d="M20 13.4A8.2 8.2 0 0 1 10.6 4a8.4 8.4 0 1 0 9.4 9.4Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+      <span class="theme-toggle-libelle">Thème sombre</span>
+    </button>
   </div>
 </header>
 
@@ -520,6 +542,7 @@
 
 <!-- Ordre important : config → API → magasin de données → panier → affichage -->
 <!-- Ordre important : contenu → panier → affichage -->
+<script src="assets/js/theme.js?v=59eb1dc5"></script>
 <script src="assets/js/store.js?v=c8db04e1"></script>
 <script src="assets/js/cart.js?v=3e95d136"></script>
 <script src="assets/js/script.js?v=0df93841"></script>
