@@ -53,7 +53,7 @@ document.documentElement.setAttribute('data-theme',c||((window.matchMedia&&windo
 
 <link rel="icon" href="assets/images/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="assets/images/logo-icon.png">
-<link rel="stylesheet" href="assets/css/style.css?v=a7829087">
+<link rel="stylesheet" href="assets/css/style.css?v=1777dbb7">
 
 <!-- Données structurées : aide les moteurs à comprendre l'activité,
      et permet l'affichage enrichi dans les résultats de recherche. -->
@@ -76,7 +76,6 @@ document.documentElement.setAttribute('data-theme',c||((window.matchMedia&&windo
     "addressCountry": "MA"
   },
   "areaServed": { "@type": "Country", "name": "Maroc" },
-  "priceRange": "$$",
   "knowsLanguage": ["fr", "ar"],
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
@@ -319,23 +318,12 @@ document.documentElement.setAttribute('data-theme',c||((window.matchMedia&&windo
     </div>
 
     <div class="cart-panel-footer" id="cartFooter">
-      <div class="cart-totals">
-        <div class="cart-total-row">
-          <span>Sous-total</span>
-          <span id="cartSubtotal">0 MAD</span>
-        </div>
-        <div class="cart-total-row">
-          <span>Livraison</span>
-          <span id="cartShipping">0 MAD</span>
-        </div>
-        <div class="cart-total-row cart-total-row-final">
-          <span>Total</span>
-          <span id="cartTotal">0 MAD</span>
-        </div>
-      </div>
+      <!-- Plus de totaux : la sélection sert à demander un devis, le
+           chiffrage est établi par SEFELEC en réponse. -->
+      <p class="cart-note">Votre sélection sera jointe à votre demande de devis. Nous revenons vers vous avec une proposition chiffrée.</p>
       <div class="cart-actions">
-        <button type="button" class="btn btn-outline" id="cartContinue">Continuer les achats</button>
-        <button type="button" class="btn btn-primary" id="cartCheckout">Passer la commande</button>
+        <button type="button" class="btn btn-outline" id="cartContinue">Continuer</button>
+        <button type="button" class="btn btn-primary" id="cartCheckout">Demander un devis</button>
       </div>
     </div>
   </div>
@@ -543,8 +531,8 @@ document.documentElement.setAttribute('data-theme',c||((window.matchMedia&&windo
 <!-- Ordre important : config → API → magasin de données → panier → affichage -->
 <!-- Ordre important : contenu → panier → affichage -->
 <script src="assets/js/theme.js?v=59eb1dc5"></script>
-<script src="assets/js/store.js?v=c8db04e1"></script>
-<script src="assets/js/cart.js?v=3e95d136"></script>
-<script src="assets/js/script.js?v=0df93841"></script>
+<script src="assets/js/store.js?v=2e955b1f"></script>
+<script src="assets/js/cart.js?v=1877ec88"></script>
+<script src="assets/js/script.js?v=53290984"></script>
 </body>
 </html>

@@ -351,7 +351,7 @@ ${appelAAction('Une référence vous manque ?', 'Nous consultons nos fournisseur
   });
 }
 
-export function pageProduit(produit, categorie, similaires, services, devise) {
+export function pageProduit(produit, categorie, similaires, services) {
   const alt = produit.image_alt || `${produit.name} — SEFELEC`;
   const specs = Object.entries(produit.specs || {});
 
@@ -378,7 +378,6 @@ export function pageProduit(produit, categorie, similaires, services, devise) {
       <h1>${echapper(produit.name)}</h1>
       <span class="catalog-ref">Référence : ${echapper(produit.ref)}</span>
       <p class="fiche-desc">${echapper(produit.desc)}</p>
-      ${produit.price ? `<span class="catalog-price">${produit.price.toLocaleString('fr-MA')} ${echapper(devise || 'MAD')}</span>` : ''}
       <div class="cta-actions">
         <a href="/#contactForm" class="btn btn-primary">Demander un devis</a>
         <a href="/#contact" class="btn btn-outline">Nous contacter</a>

@@ -21,9 +21,6 @@ let PARTNERS = [];
 let SETTINGS = {};
 
 // Valeurs de repli tant que le contenu n'est pas chargé
-let CURRENCY = 'MAD';
-let SHIPPING_FLAT = 50;
-let SHIPPING_FREE_THRESHOLD = 1000;
 
 /** Emplacement du contenu généré, relatif à la page. */
 const CONTENT_URL = 'assets/data/content.json';
@@ -49,11 +46,6 @@ async function loadAllData() {
   SETTINGS = content.settings || {};
 
   // Paramètres commerciaux pilotés depuis le back-office
-  if (SETTINGS.currency) CURRENCY = SETTINGS.currency;
-  if (SETTINGS.shipping_flat != null) SHIPPING_FLAT = Number(SETTINGS.shipping_flat);
-  if (SETTINGS.shipping_free_threshold != null) {
-    SHIPPING_FREE_THRESHOLD = Number(SETTINGS.shipping_free_threshold);
-  }
 
   return { catalog, catalogLabels, SERVICES, TESTIMONIALS, PARTNERS, SETTINGS };
 }

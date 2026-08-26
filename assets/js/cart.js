@@ -6,8 +6,8 @@ function escapeHtml(str) {
 }
 
 // ===== Panier — état & persistance =====
-// SHIPPING_FLAT, SHIPPING_FREE_THRESHOLD et CURRENCY sont définis dans
-// js/store.js et alimentés par les paramètres du back-office.
+// Le panier rassemble des références et des quantités en vue d'une
+// demande de devis : il ne calcule aucun montant.
 const CART_STORAGE_KEY = 'sefelec_cart_v1';
 
 let cartItems = loadCart();
@@ -85,24 +85,17 @@ function getCartCount() {
   return cartItems.reduce((sum, item) => sum + item.qty, 0);
 }
 
+// Le panier ne calcule plus de montants : il rassemble les références et
+// les quantités qui composeront la demande de devis. Les tarifs dépendent
+// des quantités et des délais, ils sont établis au cas par cas.
 function getCartLines() {
   return cartItems
     .map(item => {
       const product = findProduct(item.id);
       if (!product) return null;
-      return { product, qty: item.qty, subtotal: product.price * item.qty };
+      return { product, qty: item.qty };
     })
     .filter(Boolean);
-}
-
-function getCartTotals() {
-  const subtotal = getCartLines().reduce((sum, line) => sum + line.subtotal, 0);
-  const shipping = subtotal === 0 || subtotal >= SHIPPING_FREE_THRESHOLD ? 0 : SHIPPING_FLAT;
-  return { subtotal, shipping, total: subtotal + shipping };
-}
-
-function formatPrice(amount) {
-  return `${amount.toLocaleString('fr-FR')} ${CURRENCY}`;
 }
 
 // ===== Panier — rendu =====
@@ -115,9 +108,6 @@ const cartCheckout = document.getElementById('cartCheckout');
 const cartItemsList = document.getElementById('cartItemsList');
 const cartEmpty = document.getElementById('cartEmpty');
 const cartFooter = document.getElementById('cartFooter');
-const cartSubtotalEl = document.getElementById('cartSubtotal');
-const cartShippingEl = document.getElementById('cartShipping');
-const cartTotalEl = document.getElementById('cartTotal');
 
 function renderCart() {
   const lines = getCartLines();
@@ -138,7 +128,7 @@ function renderCart() {
   cartEmpty.classList.remove('visible');
   cartFooter.classList.add('visible');
 
-  cartItemsList.innerHTML = lines.map(({ product, qty, subtotal }) => `
+  cartItemsList.innerHTML = lines.map(({ product, qty }) => `
     <div class="cart-item" data-id="${product.id}">
       <div class="cart-item-photo">
         <img src="${product.image}" alt="${escapeHtml(product.name)}">
@@ -146,7 +136,6 @@ function renderCart() {
       <div class="cart-item-info">
         <h4>${escapeHtml(product.name)}</h4>
         <span class="cart-item-ref">Réf. ${escapeHtml(product.ref)}</span>
-        <span class="cart-item-price">${formatPrice(product.price)} / unité</span>
       </div>
       <div class="cart-item-controls">
         <div class="qty-stepper">
@@ -154,18 +143,12 @@ function renderCart() {
           <span class="qty-value">${qty}</span>
           <button type="button" class="qty-btn" data-action="increase" aria-label="Augmenter la quantité">&plus;</button>
         </div>
-        <span class="cart-item-subtotal">${formatPrice(subtotal)}</span>
         <button type="button" class="cart-item-remove" data-action="remove" aria-label="Retirer l'article">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none"><path d="M4 7H20M9 7V4H15V7M6 7L7 20H17L18 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
     </div>
   `).join('');
-
-  const totals = getCartTotals();
-  cartSubtotalEl.textContent = formatPrice(totals.subtotal);
-  cartShippingEl.textContent = totals.shipping === 0 ? 'Offerte' : formatPrice(totals.shipping);
-  cartTotalEl.textContent = formatPrice(totals.total);
 }
 
 function openCart() {
@@ -204,18 +187,17 @@ cartCheckout.addEventListener('click', () => {
   if (cartItems.length === 0) return;
 
   const lines = getCartLines();
-  const totals = getCartTotals();
   const orderLines = lines.map((line, i) =>
-    `${i + 1}. ${line.product.name} (${line.product.ref})\n   Qté : ${line.qty} x ${formatPrice(line.product.price)} = ${formatPrice(line.subtotal)}`
+    `${i + 1}. ${line.product.name} (${line.product.ref}) — quantité : ${line.qty}`
   );
+  // La demande porte sur des références et des quantités ; le chiffrage
+  // est établi par SEFELEC en réponse.
   const summary = [
-    'Nouvelle commande — SEFELEC',
+    'Demande de devis — SEFELEC',
     '',
     ...orderLines,
     '',
-    `Sous-total : ${formatPrice(totals.subtotal)}`,
-    `Livraison : ${totals.shipping === 0 ? 'Offerte' : formatPrice(totals.shipping)}`,
-    `Total : ${formatPrice(totals.total)}`
+    'Merci de me communiquer votre meilleure offre pour ces références.'
   ].join('\n');
 
   const messageField = document.getElementById('message');

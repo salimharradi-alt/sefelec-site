@@ -117,7 +117,7 @@ async function main() {
         '&sort=sort,name&limit=-1'
     ),
     api(
-      '/items/products?fields=id,name,ref,sku,slug,description,price,promo_price,stock,image,specs,' +
+      '/items/products?fields=id,name,ref,sku,slug,description,stock,image,specs,' +
         'applications,avantages,seo_title,seo_description,keywords,image_alt,' +
         'is_featured,is_popular,is_promo,category.id,category.name,category.slug&sort=sort,name&limit=-1'
     ),
@@ -139,7 +139,6 @@ async function main() {
   console.log('— Images des produits —');
   const exportedProducts = [];
   for (const p of products) {
-    const hasPromo = p.promo_price != null && Number(p.promo_price) > 0;
     exportedProducts.push({
       id: p.id,
       name: p.name || '(sans nom)',
@@ -147,15 +146,16 @@ async function main() {
       // Adresse de la fiche produit. Sans elle, pas de page dédiée.
       slug: p.slug || null,
       desc: p.description || '',
+      // Les prix ne sont plus exportés. content.json est servi
+      // publiquement : y laisser les tarifs reviendrait à les publier,
+      // même sans les afficher. Ils restent enregistrés dans Directus,
+      // simplement masqués côté tableau de bord.
       applications: p.applications || '',
       avantages: p.avantages || '',
       seo_title: p.seo_title || '',
       seo_description: p.seo_description || '',
       keywords: p.keywords || '',
       image_alt: p.image_alt || '',
-      price: Number(hasPromo ? p.promo_price : p.price) || 0,
-      basePrice: Number(p.price) || 0,
-      hasPromo,
       stock: p.stock,
       image: await fetchImage(p.image, PRESETS.carte),
       imageLarge: await fetchImage(p.image, PRESETS.large),
@@ -163,8 +163,7 @@ async function main() {
       categoryName: p.category?.name || '',
       specs: parseJson(p.specs),
       isFeatured: !!p.is_featured,
-      isPopular: !!p.is_popular,
-      isPromo: !!p.is_promo
+      isPopular: !!p.is_popular
     });
     if (p.image) console.log(`  ✓ ${p.name}`);
   }
@@ -223,7 +222,14 @@ async function main() {
   // --- Assemblage ---
   const content = {
     generatedAt: new Date().toISOString(),
-    settings: settings || {},
+    // Les réglages tarifaires sont écartés de l'export : devise et frais
+    // de livraison n'ont plus d'emploi depuis le passage au devis, et
+    // content.json est un fichier public.
+    settings: Object.fromEntries(
+      Object.entries(settings || {}).filter(
+        ([cle]) => !['currency', 'shipping_flat', 'shipping_free_threshold'].includes(cle)
+      )
+    ),
     categories: labels,
     products: exportedProducts,
     services: (services || []).map((s) => ({
@@ -307,7 +313,7 @@ async function main() {
       const similaires = dedans.filter((p) => p.id !== produit.id).slice(0, 3);
       ecrirePage(
         path.join('produits', categorie.slug, produit.slug),
-        pageProduit(produit, categorie, similaires, servicesPublies, content.settings?.currency),
+        pageProduit(produit, categorie, similaires, servicesPublies),
         '0.6'
       );
       nbFiches++;

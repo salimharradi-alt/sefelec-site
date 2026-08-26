@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-20T11:59:02.862Z",
+  "generatedAt": "2026-08-26T18:53:54.294Z",
   "settings": {
     "id": "692fc7e7-c2a4-4328-bd1d-3ebe1b3d0661",
     "site_name": "SEFELEC S.A.R.L.",
@@ -17,10 +17,7 @@
     "instagram": null,
     "linkedin": null,
     "color_primary": "#1E3A8A",
-    "color_accent": "#E53935",
-    "currency": "MAD",
-    "shipping_flat": 50,
-    "shipping_free_threshold": 1000
+    "color_accent": "#E53935"
   },
   "categories": {
     "disjoncteurs": "Disjoncteurs",
@@ -42,9 +39,6 @@
       "seo_description": "Disjoncteur unipolaire modulaire pour la protection des circuits terminaux contre les surcharges et court-circuits.",
       "keywords": "",
       "image_alt": "",
-      "price": 85,
-      "basePrice": 85,
-      "hasPromo": false,
       "stock": 0,
       "image": "assets/images/content/306e212e-1481-4519-b4a1-36de5f4e17a1-carte.webp",
       "imageLarge": "assets/images/content/306e212e-1481-4519-b4a1-36de5f4e17a1-large.webp",
@@ -61,8 +55,7 @@
         "Poids": "0.15 kg"
       },
       "isFeatured": false,
-      "isPopular": false,
-      "isPromo": false
+      "isPopular": false
     },
     {
       "id": "fe4d3afe-442c-49bd-81a7-556cad009fa6",
@@ -76,9 +69,6 @@
       "seo_description": "Conducteur rigide en cuivre pour installations fixes en habitat individuel et tertiaire.",
       "keywords": "",
       "image_alt": "",
-      "price": 420,
-      "basePrice": 420,
-      "hasPromo": false,
       "stock": 0,
       "image": "assets/images/content/e6078a47-f895-474d-bf71-4d0da25107a0-carte.webp",
       "imageLarge": "assets/images/content/e6078a47-f895-474d-bf71-4d0da25107a0-large.webp",
@@ -95,8 +85,7 @@
         "Conditionnement": "Couronne 100 m"
       },
       "isFeatured": false,
-      "isPopular": false,
-      "isPromo": false
+      "isPopular": false
     },
     {
       "id": "45a9d3d3-e10a-4583-904a-69631aebbf75",
@@ -110,9 +99,6 @@
       "seo_description": "Protection différentielle contre les contacts indirects, adaptée aux circuits prises et éclairage.",
       "keywords": "",
       "image_alt": "",
-      "price": 145,
-      "basePrice": 145,
-      "hasPromo": false,
       "stock": 0,
       "image": "assets/images/content/4e5395f8-daee-4f39-8aee-46d71194a09d-carte.webp",
       "imageLarge": "assets/images/content/4e5395f8-daee-4f39-8aee-46d71194a09d-large.webp",
@@ -129,8 +115,7 @@
         "Poids": "0.22 kg"
       },
       "isFeatured": false,
-      "isPopular": false,
-      "isPromo": false
+      "isPopular": false
     },
     {
       "id": "69c91fe1-372f-4a96-911d-f0982f93fdd8",
@@ -144,9 +129,6 @@
       "seo_description": "Câble énergie souple pour environnements industriels exigeants, forte tenue mécanique.",
       "keywords": "",
       "image_alt": "",
-      "price": 2450,
-      "basePrice": 2450,
-      "hasPromo": false,
       "stock": 0,
       "image": "assets/images/content/80265f67-d2f3-4f1f-814a-4b083cb017c9-carte.webp",
       "imageLarge": "assets/images/content/80265f67-d2f3-4f1f-814a-4b083cb017c9-large.webp",
@@ -163,8 +145,7 @@
         "Conditionnement": "Touret 500 m"
       },
       "isFeatured": false,
-      "isPopular": false,
-      "isPromo": false
+      "isPopular": false
     },
     {
       "id": "a3687b6e-b8ae-46eb-a641-0c54fbeee9b2",
@@ -178,9 +159,6 @@
       "seo_description": "Prise de courant à obturateurs pour installations résidentielles et tertiaires.",
       "keywords": "",
       "image_alt": "",
-      "price": 35,
-      "basePrice": 35,
-      "hasPromo": false,
       "stock": 0,
       "image": "assets/images/content/1f487580-cd81-4d67-aaa1-0611ba02eebf-carte.webp",
       "imageLarge": "assets/images/content/1f487580-cd81-4d67-aaa1-0611ba02eebf-large.webp",
@@ -197,8 +175,7 @@
         "Poids": "0.08 kg"
       },
       "isFeatured": false,
-      "isPopular": false,
-      "isPromo": false
+      "isPopular": false
     },
     {
       "id": "20aa523d-ad19-4e0c-816d-653551917cb8",
@@ -212,9 +189,6 @@
       "seo_description": "Interrupteur pour commande d'éclairage à deux points, montage encastré.",
       "keywords": "",
       "image_alt": "",
-      "price": 28,
-      "basePrice": 28,
-      "hasPromo": false,
       "stock": 0,
       "image": "assets/images/content/460f586b-700d-4609-8de0-3e8c6a877b9b-carte.webp",
       "imageLarge": "assets/images/content/460f586b-700d-4609-8de0-3e8c6a877b9b-large.webp",
@@ -231,8 +205,7 @@
         "Poids": "0.06 kg"
       },
       "isFeatured": false,
-      "isPopular": false,
-      "isPromo": false
+      "isPopular": false
     },
     {
       "id": "fe0e42a4-116e-4908-bc74-f4830e117272",
@@ -246,9 +219,6 @@
       "seo_description": "Coffret de distribution monorangée pour petites installations résidentielles.",
       "keywords": "",
       "image_alt": "",
-      "price": 320,
-      "basePrice": 320,
-      "hasPromo": false,
       "stock": 0,
       "image": "assets/images/content/b1917c52-f98f-49f8-b3c3-38d7067af99a-carte.webp",
       "imageLarge": "assets/images/content/b1917c52-f98f-49f8-b3c3-38d7067af99a-large.webp",
@@ -265,8 +235,7 @@
         "Poids": "1.1 kg"
       },
       "isFeatured": false,
-      "isPopular": false,
-      "isPromo": false
+      "isPopular": false
     },
     {
       "id": "13e721a9-2651-4d52-93dc-fb4a13b771ee",
@@ -280,9 +249,6 @@
       "seo_description": "Armoire modulaire pour distribution basse tension en environnement industriel.",
       "keywords": "",
       "image_alt": "",
-      "price": 6800,
-      "basePrice": 6800,
-      "hasPromo": false,
       "stock": 0,
       "image": "assets/images/content/96623128-46fb-4981-a17d-4bd5da3a10d8-carte.webp",
       "imageLarge": "assets/images/content/96623128-46fb-4981-a17d-4bd5da3a10d8-large.webp",
@@ -299,8 +265,7 @@
         "Poids": "38 kg"
       },
       "isFeatured": false,
-      "isPopular": false,
-      "isPromo": false
+      "isPopular": false
     },
     {
       "id": "220fc5d9-22a1-464d-ad16-0556a65aca81",
@@ -314,9 +279,6 @@
       "seo_description": "Connecteur industriel étanche pour raccordement extérieur ou en milieu humide.",
       "keywords": "",
       "image_alt": "",
-      "price": 180,
-      "basePrice": 180,
-      "hasPromo": false,
       "stock": 0,
       "image": "assets/images/content/39bd9e73-3d62-4a6f-9f86-e1b255767062-carte.webp",
       "imageLarge": "assets/images/content/39bd9e73-3d62-4a6f-9f86-e1b255767062-large.webp",
@@ -333,8 +295,7 @@
         "Poids": "0.18 kg"
       },
       "isFeatured": false,
-      "isPopular": false,
-      "isPromo": false
+      "isPopular": false
     }
   ],
   "services": [

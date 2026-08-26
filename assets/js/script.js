@@ -96,12 +96,12 @@ function renderCatalog(filter) {
       <h3>${escapeHtml(p.name)}</h3>
       <span class="catalog-ref">Réf. ${escapeHtml(p.ref)}</span>
       <p>${escapeHtml(p.desc)}</p>
-      <span class="catalog-price">
-        ${formatPrice(p.price)}
-        ${p.hasPromo ? `<s class="catalog-price-old">${formatPrice(p.basePrice)}</s>` : ''}
-      </span>
       <div class="catalog-actions">
-        <button type="button" class="btn btn-primary catalog-add" data-id="${p.id}">Ajouter au panier</button>
+        <!-- Les tarifs dépendent des quantités et des délais : ils sont
+             établis au cas par cas. Le devis remplace donc l'affichage
+             d'un prix, à l'emplacement où celui-ci figurait. -->
+        <a class="btn btn-primary" href="#contactForm">Demander un devis</a>
+        <button type="button" class="btn btn-outline catalog-add" data-id="${p.id}">Ajouter au panier</button>
         ${p.slug && p.category
           // Vers la fiche complète : une vraie page, indexable, avec ses
           // caractéristiques, ses produits similaires et son devis.
