@@ -9,11 +9,23 @@ Options -Indexes
 # sans cette ligne, ouvrir /admin/ renvoyait une erreur 403.
 DirectoryIndex index.php
 
-# Ces fichiers ne doivent jamais être servis directement :
-# mot-de-passe.php contient l'empreinte du mot de passe, et les autres
-# sont des bibliothèques appelées par les pages, pas des pages.
-<FilesMatch "^(mot-de-passe|config|images|partie-theme|securite|tentatives)\.php$">
+# ------------------------------------------------------------
+#  Accès direct aux fichiers PHP
+# ------------------------------------------------------------
+# Tout est refusé, puis les pages réelles sont autorisées une à une.
+#
+# Une liste blanche plutôt qu'une liste noire : les fichiers de
+# bibliothèque — schéma, données, champs, ossature — sont conçus pour
+# être inclus, pas appelés. Appelés directement, ils s'exécuteraient
+# sans leur contexte et pourraient révéler des chemins du serveur.
+# Avec une liste noire, chaque nouveau fichier oublié restait exposé :
+# c'est arrivé lors de l'ajout du moteur générique.
+<FilesMatch "\.php$">
   Require all denied
+</FilesMatch>
+
+<FilesMatch "^(index|connexion|deconnexion|liste|editer|supprimer|reglages|installer|mot-de-passe-changer)\.php$">
+  Require all granted
 </FilesMatch>
 
 # L'administration ne doit apparaître dans aucun moteur de recherche.
