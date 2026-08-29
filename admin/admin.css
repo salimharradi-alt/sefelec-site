@@ -218,3 +218,27 @@
   .admin-col-actions { text-align: left; }
   .admin-action { margin: 4px 4px 0 0; }
 }
+
+/* Secours affiché si le dossier admin n'autorise pas l'écriture :
+   l'utilisateur crée alors le fichier lui-même. */
+.installer-secours { text-align: left; margin-bottom: 18px; }
+.installer-secours ol { margin: 8px 0 12px; padding-left: 20px; font-size: 0.86rem; color: var(--ink-soft); }
+.installer-secours li { margin-bottom: 4px; }
+.installer-secours code {
+  background: var(--paper-alt);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+.installer-secours textarea {
+  width: 100%;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.78rem;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--paper-alt);
+  color: var(--ink);
+  resize: vertical;
+}
+.installer-note { font-size: 0.78rem; color: var(--ink-soft); margin: 8px 0 0; }

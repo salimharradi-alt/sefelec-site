@@ -35,7 +35,11 @@ if (!$dejaFait && $_SERVER['REQUEST_METHOD'] === 'POST') {
             . "return " . var_export($empreinte, true) . ";\n";
 
         if (file_put_contents($cible, $contenu) === false) {
-            $erreur = "Impossible d'écrire mot-de-passe.php. Vérifiez les droits du dossier admin.";
+            // Le dossier n'est pas inscriptible. Plutôt que de laisser
+            // l'utilisateur sans issue, on lui donne le contenu exact du
+            // fichier à créer lui-même depuis le Gestionnaire de fichiers.
+            $erreur = "Le dossier admin n'autorise pas l'écriture.";
+            $contenuManuel = $contenu;
         } else {
             @chmod($cible, 0600);
             $message = 'Mot de passe enregistré.';
@@ -65,6 +69,22 @@ if (!$dejaFait && $_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
     <?php if ($erreur): ?>
       <p class="admin-alerte admin-alerte-erreur"><?= htmlspecialchars($erreur, ENT_QUOTES) ?></p>
+    <?php endif; ?>
+
+    <?php if (!empty($contenuManuel)): ?>
+      <div class="installer-secours">
+        <p><strong>Créez le fichier vous-même :</strong></p>
+        <ol>
+          <li>cPanel &rarr; Gestionnaire de fichiers &rarr; dossier <code>admin</code></li>
+          <li>Nouveau fichier, nommé exactement <code>mot-de-passe.php</code></li>
+          <li>Modifier, puis coller le texte ci-dessous, et enregistrer</li>
+        </ol>
+        <textarea readonly rows="4" onclick="this.select()"><?= htmlspecialchars($contenuManuel, ENT_QUOTES) ?></textarea>
+        <p class="installer-note">
+          Ce texte ne contient pas votre mot de passe, seulement son empreinte :
+          on ne peut pas le retrouver à partir d'elle.
+        </p>
+      </div>
     <?php endif; ?>
 
     <?php if ($dejaFait): ?>
