@@ -134,6 +134,7 @@ function champsDepuisFormulaire(array $champs, array $existant, array &$erreurs)
                 $valeurs[$nom] = preg_match('/^#[0-9a-fA-F]{6}$/', $c) ? strtoupper($c) : ($def['defaut'] ?? null);
                 break;
 
+            case 'document':
             case 'image':
                 // Traitée à part : le fichier n'arrive pas dans $_POST.
                 break;

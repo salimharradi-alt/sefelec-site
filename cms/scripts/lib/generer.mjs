@@ -382,6 +382,13 @@ export function pageProduit(produit, categorie, similaires, services) {
         <a href="/#contactForm" class="btn btn-primary">Demander un devis</a>
         <a href="/#contact" class="btn btn-outline">Nous contacter</a>
       </div>
+      ${produit.fiche_technique && produit.fiche_technique.chemin
+        ? `<a class="lien-pdf" href="/${echapper(produit.fiche_technique.chemin)}"
+               download="${echapper(produit.fiche_technique.nom || produit.ref)}.pdf" target="_blank" rel="noopener">
+             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 19h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+             Télécharger la fiche technique (PDF)
+           </a>`
+        : ''}
     </div>
   </div>
 </section>

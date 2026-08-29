@@ -48,6 +48,8 @@ function schemaContenu(): array
                 'image'        => ['type' => 'image', 'label' => 'Photo du produit'],
                 'image_alt'    => ['type' => 'texte', 'label' => 'Description de l\'image',
                                    'aide' => 'Lue par les personnes non voyantes et par les moteurs de recherche.'],
+                'fiche_technique' => ['type' => 'document', 'label' => 'Fiche technique (PDF)',
+                                   'aide' => 'Document PDF de 20 Mo au maximum. Un bouton de téléchargement apparaîtra sur la fiche du produit.'],
                 'specs'        => ['type' => 'paires', 'label' => 'Caractéristiques techniques', 'lignes' => 6,
                                    'aide' => 'Une par ligne, sous la forme « Intitulé : valeur ».'],
                 'applications' => ['type' => 'lignes', 'label' => 'Applications', 'lignes' => 4, 'repli' => 'Compléments',

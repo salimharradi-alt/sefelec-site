@@ -11,6 +11,7 @@ require __DIR__ . '/config.php';
 require __DIR__ . '/schema.php';
 require __DIR__ . '/donnees.php';
 require __DIR__ . '/images.php';
+require __DIR__ . '/documents.php';
 exigerConnexion();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -64,6 +65,9 @@ if (ecrireContenu(collectionEcrire($contenu, $def, $elements))) {
     foreach ($def['champs'] as $nom => $d) {
         if (($d['type'] ?? '') === 'image') {
             supprimerImagesDe($element, $nom);
+        }
+        if (($d['type'] ?? '') === 'document') {
+            supprimerDocumentDe($element, $nom);
         }
     }
     messageFlash('« ' . ($element['name'] ?? 'Élément') . ' » supprimé.');

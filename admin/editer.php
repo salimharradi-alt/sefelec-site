@@ -12,6 +12,7 @@ require __DIR__ . '/config.php';
 require __DIR__ . '/schema.php';
 require __DIR__ . '/donnees.php';
 require __DIR__ . '/images.php';
+require __DIR__ . '/documents.php';
 require __DIR__ . '/mise-en-page.php';
 exigerConnexion();
 
@@ -48,6 +49,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     verifierCsrf();
 
     $element = champsDepuisFormulaire($champs, $element, $erreurs);
+
+    // --- Documents PDF ---
+    foreach ($champs as $nom => $d) {
+        if ($d['type'] !== 'document') continue;
+        if (empty($_FILES[$nom]['tmp_name']) || !is_uploaded_file($_FILES[$nom]['tmp_name'])) continue;
+
+        $resultat = traiterDocument($_FILES[$nom]);
+        if (isset($resultat['erreur'])) {
+            $erreurs[] = $resultat['erreur'];
+        } else {
+            supprimerDocumentDe($element, $nom);
+            $element[$nom] = $resultat;
+        }
+    }
 
     // --- Images ---
     foreach ($champs as $nom => $d) {

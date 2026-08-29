@@ -125,6 +125,26 @@ function afficherUnChamp(string $nom, array $def, array $valeurs, array $contenu
             echo '</select>';
             break;
 
+        case 'document':
+            // La valeur est un tableau : chemin, nom d'origine et taille.
+            if (!empty($valeur['chemin'])) {
+                printf(
+                    '<div class="admin-document">'
+                    . '<a href="/%s" target="_blank" rel="noopener">%s.pdf</a>'
+                    . '<span>%s — en choisir un nouveau le remplacera</span>'
+                    . '</div>',
+                    e((string) $valeur['chemin']),
+                    e((string) ($valeur['nom'] ?? 'Fiche technique')),
+                    e(tailleLisible((int) ($valeur['taille'] ?? 0)))
+                );
+            }
+            printf(
+                '<input type="file" id="%s" name="%s" accept="application/pdf,.pdf">',
+                e($nom),
+                e($nom)
+            );
+            break;
+
         case 'image':
             if (!empty($valeur)) {
                 printf(

@@ -101,6 +101,15 @@ function renderCatalog(filter) {
              établis au cas par cas. Le devis remplace donc l'affichage
              d'un prix, à l'emplacement où celui-ci figurait. -->
         <a class="btn btn-primary" href="#contactForm">Demander un devis</a>
+        ${p.fiche_technique && p.fiche_technique.chemin
+          // « download » propose l'enregistrement plutôt que l'ouverture
+          // dans le navigateur, et donne au fichier un nom lisible.
+          ? `<a class="lien-pdf" href="/${escapeHtml(p.fiche_technique.chemin)}"
+                 download="${escapeHtml(p.fiche_technique.nom || p.ref)}.pdf" target="_blank" rel="noopener">
+               <svg viewBox="0 0 24 24" width="15" height="15" fill="none" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 19h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+               Fiche technique (PDF)
+             </a>`
+          : ''}
         <button type="button" class="btn btn-outline catalog-add" data-id="${p.id}">Ajouter au panier</button>
         ${p.slug && p.category
           // Vers la fiche complète : une vraie page, indexable, avec ses
