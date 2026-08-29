@@ -5,6 +5,10 @@
 # Pas de liste de fichiers si l'on ouvre /admin/ sans page.
 Options -Indexes
 
+# La racine du site impose « DirectoryIndex index.html », absent ici :
+# sans cette ligne, ouvrir /admin/ renvoyait une erreur 403.
+DirectoryIndex index.php
+
 # Ces fichiers ne doivent jamais être servis directement :
 # mot-de-passe.php contient l'empreinte du mot de passe, et les autres
 # sont des bibliothèques appelées par les pages, pas des pages.
