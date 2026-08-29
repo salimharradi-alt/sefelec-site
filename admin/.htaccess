@@ -1,0 +1,18 @@
+# ============================================================
+#  SEFELEC — Protection du dossier d'administration
+# ============================================================
+
+# Pas de liste de fichiers si l'on ouvre /admin/ sans page.
+Options -Indexes
+
+# Ces fichiers ne doivent jamais être servis directement :
+# mot-de-passe.php contient l'empreinte du mot de passe, et les autres
+# sont des bibliothèques appelées par les pages, pas des pages.
+<FilesMatch "^(mot-de-passe|config|images)\.php$">
+  Require all denied
+</FilesMatch>
+
+# L'administration ne doit apparaître dans aucun moteur de recherche.
+<IfModule mod_headers.c>
+  Header set X-Robots-Tag "noindex, nofollow, noarchive"
+</IfModule>

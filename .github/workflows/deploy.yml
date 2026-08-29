@@ -82,6 +82,12 @@ jobs:
           # Si Nindohost refuse le FTPS, remplacez « ftps » par « ftp ».
           protocol: ftps
           # Tout ce qui ne fait pas partie du site public est exclu.
+          #
+          # ATTENTION — ne pas exclure ici assets/data/content.json ni
+          # assets/images/content/. Ces fichiers ont déjà été transférés :
+          # les exclure les ferait passer pour supprimés, et l'outil les
+          # effacerait du serveur. Le partage entre contenu géré en ligne
+          # et code déployé se règle autrement (voir admin/LISEZ-MOI.md).
           exclude: |
             **/.git*
             **/.git*/**

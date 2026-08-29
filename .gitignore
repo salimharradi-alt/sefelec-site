@@ -43,3 +43,6 @@ npm-debug.log*
 
 # --- Outils locaux ------------------------------------------
 .claude/
+
+# Empreinte du mot de passe de l administration : jamais dans le depot.
+admin/mot-de-passe.php
