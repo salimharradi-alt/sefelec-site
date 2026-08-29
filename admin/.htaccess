@@ -12,7 +12,7 @@ DirectoryIndex index.php
 # Ces fichiers ne doivent jamais être servis directement :
 # mot-de-passe.php contient l'empreinte du mot de passe, et les autres
 # sont des bibliothèques appelées par les pages, pas des pages.
-<FilesMatch "^(mot-de-passe|config|images|partie-theme)\.php$">
+<FilesMatch "^(mot-de-passe|config|images|partie-theme|securite|tentatives)\.php$">
   Require all denied
 </FilesMatch>
 

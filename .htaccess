@@ -92,6 +92,13 @@ Options -Indexes
 #     Ces fichiers ne devraient jamais être transférés en ligne
 #     (le déploiement les exclut déjà), mais on bloque par sécurité.
 # ------------------------------------------------------------
+# Copies de sauvegarde et fichiers temporaires produits par
+# l'administration. Ils apparaissent dès la première modification de
+# contenu et n'ont aucune raison d'être servis.
+<FilesMatch "\.(sauvegarde|tmp|bak)$">
+  Require all denied
+</FilesMatch>
+
 <FilesMatch "^\.env|\.db$|\.sqlite$|package(-lock)?\.json$|\.mjs$|\.md$|\.cmd$">
   Require all denied
 </FilesMatch>

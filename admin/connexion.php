@@ -8,6 +8,7 @@
 
 declare(strict_types=1);
 require __DIR__ . '/config.php';
+require __DIR__ . '/securite.php';
 
 demarrerSession();
 
@@ -17,6 +18,7 @@ if (estConnecte()) {
 }
 
 $erreur = null;
+$attenteInitiale = secondesAvantNouvelEssai();
 $fichierMdp = __DIR__ . '/mot-de-passe.php';
 
 if (!file_exists($fichierMdp)) {
@@ -29,23 +31,31 @@ if (!file_exists($fichierMdp)) {
     $EMPREINTE_MOT_DE_PASSE = require $fichierMdp;
     $saisi = (string) ($_POST['motdepasse'] ?? '');
 
-    // Ralentit les tentatives répétées : une seconde par essai suffit à
-    // rendre une attaque par dictionnaire inexploitable, sans gêner un
-    // utilisateur légitime.
-    $derniere = $_SESSION['dernier_essai'] ?? 0;
-    if (time() - $derniere < 1) {
-        sleep(1);
-    }
-    $_SESSION['dernier_essai'] = time();
+    // Le comptage se fait par adresse IP, et non en session : un
+    // programme qui n'accepte pas les cookies aurait sinon un compteur
+    // remis à zéro à chaque essai.
+    $attente = secondesAvantNouvelEssai();
+    if ($attente > 0) {
+        $erreur = 'Trop de tentatives. Réessayez dans '
+            . (int) ceil($attente / 60) . ' minute(s).';
+    } else {
+        // Comparaison à temps constant, assurée par password_verify.
+        if ($saisi !== '' && password_verify($saisi, $EMPREINTE_MOT_DE_PASSE)) {
+            reinitialiserEchecs();
+            session_regenerate_id(true); // empêche la fixation de session
+            $_SESSION['connecte'] = true;
+            $_SESSION['vu_a'] = time();
+            header('Location: index.php');
+            exit;
+        }
 
-    if ($saisi !== '' && password_verify($saisi, $EMPREINTE_MOT_DE_PASSE)) {
-        session_regenerate_id(true); // empêche la fixation de session
-        $_SESSION['connecte'] = true;
-        $_SESSION['vu_a'] = time();
-        header('Location: index.php');
-        exit;
+        enregistrerEchec();
+        $restants = essaisRestants();
+        $erreur = 'Mot de passe incorrect.'
+            . ($restants > 0 && $restants <= 3
+                ? ' Encore ' . $restants . ' essai(s) avant blocage temporaire.'
+                : '');
     }
-    $erreur = 'Mot de passe incorrect.';
 }
 ?>
 <!DOCTYPE html>
@@ -70,7 +80,9 @@ if (!file_exists($fichierMdp)) {
       <p class="admin-alerte admin-alerte-erreur"><?= e($erreur) ?></p>
     <?php endif; ?>
 
-    <?php if (file_exists($fichierMdp)): ?>
+    <?php if ($attenteInitiale > 0): ?>
+      <p class="admin-alerte admin-alerte-erreur">Accès temporairement bloqué après plusieurs échecs. Réessayez dans <?= (int) ceil($attenteInitiale / 60) ?> minute(s).</p>
+    <?php elseif (file_exists($fichierMdp)): ?>
       <form method="post" autocomplete="off">
         <input type="hidden" name="csrf" value="<?= e(jetonCsrf()) ?>">
         <label for="motdepasse">Mot de passe</label>

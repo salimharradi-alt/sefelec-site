@@ -168,6 +168,7 @@ foreach ($produit['specs'] ?? [] as $cle => $valeur) {
         <span class="theme-toggle-libelle">Thème</span>
       </button>
       <a href="/" target="_blank" rel="noopener">Voir le site &nearr;</a>
+      <a href="mot-de-passe-changer.php">Mot de passe</a>
       <a href="deconnexion.php">Déconnexion</a>
     </nav>
   </div>
