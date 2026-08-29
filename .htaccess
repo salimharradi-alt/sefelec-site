@@ -30,7 +30,9 @@
 # ------------------------------------------------------------
 #  2. Page d'accueil
 # ------------------------------------------------------------
-DirectoryIndex index.html
+# index.php est necessaire au dossier /admin, dont la directive locale
+# n est pas honoree par la configuration du serveur.
+DirectoryIndex index.html index.php
 
 # Ne pas lister le contenu des dossiers sans index
 Options -Indexes
