@@ -29,12 +29,30 @@ function adresseVisiteur(): string
     return (string) ($_SERVER['REMOTE_ADDR'] ?? 'inconnue');
 }
 
+/**
+ * Le fichier est lu directement, jamais inclus.
+ *
+ * « include » passe par le cache d'opcodes de PHP : le fichier étant
+ * réécrit à chaque tentative, les lectures suivantes renvoyaient la
+ * version compilée précédente et le compteur stagnait. Constaté au test :
+ * trois essais consécutifs annonçaient le même nombre d'essais restants.
+ *
+ * L'en-tête « <?php exit; » rend le fichier inoffensif s'il était appelé
+ * directement : PHP s'arrête avant les données.
+ */
+const EN_TETE_TENTATIVES = "<?php exit; ?>\n";
+
 function lireTentatives(): array
 {
     if (!file_exists(FICHIER_TENTATIVES)) {
         return [];
     }
-    $donnees = @include FICHIER_TENTATIVES;
+    $brut = @file_get_contents(FICHIER_TENTATIVES);
+    if ($brut === false) {
+        return [];
+    }
+    $json = substr($brut, strlen(EN_TETE_TENTATIVES));
+    $donnees = json_decode((string) $json, true);
     return is_array($donnees) ? $donnees : [];
 }
 
@@ -49,13 +67,12 @@ function ecrireTentatives(array $tentatives): void
         }
     }
 
-    $contenu = "<?php\n// Suivi des tentatives de connexion. Fichier technique.\nreturn "
-        . var_export($tentatives, true) . ";\n";
+    $contenu = EN_TETE_TENTATIVES . json_encode($tentatives);
 
-    $temporaire = FICHIER_TENTATIVES . '.tmp';
-    if (file_put_contents($temporaire, $contenu, LOCK_EX) !== false) {
-        @rename($temporaire, FICHIER_TENTATIVES);
-    }
+    // Écriture directe avec verrou plutôt que fichier temporaire puis
+    // renommage : deux tentatives simultanées écriraient sinon dans deux
+    // fichiers temporaires distincts, et la dernière effacerait l'autre.
+    @file_put_contents(FICHIER_TENTATIVES, $contenu, LOCK_EX);
 }
 
 /** Secondes restantes avant de pouvoir réessayer, ou 0 si non bloqué. */
