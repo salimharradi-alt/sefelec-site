@@ -23,6 +23,7 @@ tools/
 # --- Fichiers volumineux ------------------------------------
 *.mp4
 *.zip
+# Archive du back-office : contient data.db et les images d'origine.
 *.rar
 *.7z
 

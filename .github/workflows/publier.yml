@@ -1,0 +1,143 @@
+# ============================================================
+#  SEFELEC — Bouton de publication
+# ============================================================
+# Régénère le site à partir du tableau de bord EN LIGNE, puis le publie.
+#
+# C'est la pièce qui ferme la boucle : sans elle, le client peut saisir
+# du contenu dans le tableau de bord sans que le site public change,
+# puisque celui-ci lit un fichier figé.
+#
+# Deux déclenchements :
+#   — à la demande, depuis l'onglet Actions (« Run workflow ») ;
+#   — chaque nuit, pour que rien ne reste en attente indéfiniment.
+#
+# Secret requis, en plus de ceux du déploiement :
+#   CMS_URL — adresse du tableau de bord en ligne,
+#             par exemple https://admin.sefelec.ma
+#
+# Tant que ce secret n'existe pas, le workflow s'arrête avec un message
+# explicite plutôt que de publier un site vide.
+
+name: Publier le contenu
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 03h00 UTC, soit 04h00 au Maroc — hors heures d'activité.
+    - cron: '0 3 * * *'
+
+# Deux publications simultanées écriraient le même contenu :
+# la seconde attend la fin de la première.
+concurrency:
+  group: publication
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  publier:
+    name: Régénérer puis mettre en ligne
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      - name: Contrôler que le tableau de bord en ligne est renseigné
+        env:
+          CMS_URL: ${{ secrets.CMS_URL }}
+        run: |
+          if [ -z "$CMS_URL" ]; then
+            echo "::error::Le secret CMS_URL est absent."
+            echo "Renseignez l'adresse du tableau de bord en ligne dans"
+            echo "Settings > Secrets and variables > Actions,"
+            echo "par exemple https://admin.sefelec.ma"
+            exit 1
+          fi
+          echo "Tableau de bord : $CMS_URL"
+
+      - name: Vérifier que le tableau de bord répond
+        env:
+          CMS_URL: ${{ secrets.CMS_URL }}
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 "$CMS_URL/server/ping" || echo 000)
+          echo "Réponse : $code"
+          if [ "$code" != "200" ]; then
+            echo "::error::Le tableau de bord ne répond pas ($code). Publication annulée pour ne pas écraser le site avec un contenu vide."
+            exit 1
+          fi
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Régénérer le contenu et les pages
+        working-directory: cms
+        env:
+          CMS_URL: ${{ secrets.CMS_URL }}
+        run: node scripts/build-static.mjs
+
+      - name: Contrôler que la génération a produit du contenu
+        run: |
+          if [ ! -s assets/data/content.json ]; then
+            echo "::error::content.json est vide. Publication annulée."
+            exit 1
+          fi
+          produits=$(grep -o '"ref"' assets/data/content.json | wc -l)
+          pages=$(find services produits -name index.html 2>/dev/null | wc -l)
+          echo "Contenu : $produits produits, $pages pages générées"
+          if [ "$produits" -eq 0 ]; then
+            echo "::error::Aucun produit récupéré. Publication annulée."
+            exit 1
+          fi
+
+      - name: Enregistrer les modifications
+        run: |
+          git config user.name  "Publication automatique"
+          git config user.email "actions@github.com"
+          git add assets/data assets/images/content services produits sitemap.xml index.html 404.html
+
+          if git diff --cached --quiet; then
+            echo "Aucun changement de contenu : rien à publier."
+            echo "RIEN_A_FAIRE=oui" >> $GITHUB_ENV
+          else
+            git commit -m "Publication du contenu depuis le tableau de bord"
+            git push
+          fi
+
+      - name: Envoyer les fichiers par FTP
+        if: env.RIEN_A_FAIRE != 'oui'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ secrets.FTP_DIRECTORY || './' }}
+          protocol: ftps
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            cms/**
+            tools/**
+            .github/**
+            server.js
+            package.json
+            package-lock.json
+            **/*.cmd
+            **/*.md
+            **/*.mp4
+            **/*.zip
+            **/*.pdf
+
+      - name: Récapitulatif
+        run: |
+          if [ "${RIEN_A_FAIRE:-non}" = "oui" ]; then
+            echo "### Rien à publier" >> $GITHUB_STEP_SUMMARY
+            echo "Le contenu en ligne correspond déjà au tableau de bord." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### Site mis à jour :rocket:" >> $GITHUB_STEP_SUMMARY
+            echo "Les modifications du tableau de bord sont en ligne." >> $GITHUB_STEP_SUMMARY
+          fi

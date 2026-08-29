@@ -33,7 +33,14 @@ import {
 const SITE_ROOT = path.resolve('..');
 const DATA_DIR = path.join(SITE_ROOT, 'assets', 'data');
 const IMG_DIR = path.join(SITE_ROOT, 'assets', 'images', 'content');
-const BASE = 'http://localhost:5500';
+/**
+ * Adresse du back-office à interroger.
+ *
+ * En local, le serveur unifié du projet. Une fois le tableau de bord en
+ * ligne, GitHub Actions passe CMS_URL pour publier sans votre machine :
+ * c'est ce qui permet aux modifications du client d'atteindre le site.
+ */
+const BASE = process.env.CMS_URL || 'http://localhost:5500';
 
 /**
  * Adresse publique du site — utilisée pour générer le sitemap.

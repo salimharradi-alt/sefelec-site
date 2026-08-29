@@ -99,6 +99,19 @@ Options -Indexes
   # Bloque tout accès au back-office et aux outils, s'ils avaient
   # été transférés par erreur.
   RewriteRule ^(cms|tools|node_modules|\.github)/ - [F,L]
+
+  # ----------------------------------------------------------
+  #  Raccourci vers le tableau de bord
+  # ----------------------------------------------------------
+  # Une fois le sous-domaine admin.sefelec.ma en service, retirez le
+  # « # » de la ligne suivante : sefelec.ma/admin y conduira alors, et
+  # votre client n'aura qu'une seule adresse à retenir.
+  #
+  # À n'activer qu'APRÈS avoir vérifié que https://admin.sefelec.ma
+  # répond : activée trop tôt, elle enverrait vos visiteurs sur une
+  # adresse morte.
+  #
+  # RewriteRule ^admin/?$ https://admin.sefelec.ma/admin [R=301,L]
 </IfModule>
 
 # ------------------------------------------------------------
