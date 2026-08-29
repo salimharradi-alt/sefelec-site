@@ -54,6 +54,7 @@ if (!file_exists($fichierMdp)) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
+<?php require __DIR__ . '/partie-theme.php'; ?>
 <title>Connexion — Administration SEFELEC</title>
 <link rel="icon" href="/assets/images/favicon.png" type="image/png">
 <link rel="stylesheet" href="/assets/css/style.css">
@@ -80,5 +81,6 @@ if (!file_exists($fichierMdp)) {
 
     <p class="connexion-retour"><a href="/">&larr; Retour au site</a></p>
   </main>
+<script src="/assets/js/theme.js"></script>
 </body>
 </html>

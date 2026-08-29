@@ -147,6 +147,7 @@ foreach ($produit['specs'] ?? [] as $cle => $valeur) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
+<?php require __DIR__ . '/partie-theme.php'; ?>
 <title><?= $indice === null ? 'Ajouter' : 'Modifier' ?> un produit — Administration SEFELEC</title>
 <link rel="icon" href="/assets/images/favicon.png" type="image/png">
 <link rel="stylesheet" href="/assets/css/style.css">
@@ -161,6 +162,11 @@ foreach ($produit['specs'] ?? [] as $cle => $valeur) {
       <span>Administration <strong>SEFELEC</strong></span>
     </a>
     <nav class="admin-nav">
+      <button type="button" class="theme-toggle" aria-pressed="false" aria-label="Passer au thème sombre" title="Thème sombre">
+        <svg class="icone-claire" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.5v2.2M12 19.3v2.2M4.2 12H2M22 12h-2.2M5.6 5.6 4 4M20 20l-1.6-1.6M18.4 5.6 20 4M4 20l1.6-1.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        <svg class="icone-sombre" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path d="M20 13.4A8.2 8.2 0 0 1 10.6 4a8.4 8.4 0 1 0 9.4 9.4Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        <span class="theme-toggle-libelle">Thème</span>
+      </button>
       <a href="/" target="_blank" rel="noopener">Voir le site &nearr;</a>
       <a href="deconnexion.php">Déconnexion</a>
     </nav>
@@ -270,5 +276,6 @@ foreach ($produit['specs'] ?? [] as $cle => $valeur) {
   </form>
 
 </main>
+<script src="/assets/js/theme.js"></script>
 </body>
 </html>

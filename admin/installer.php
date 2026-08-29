@@ -50,6 +50,7 @@ if (!$dejaFait && $_SERVER['REQUEST_METHOD'] === 'POST') {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
+<?php require __DIR__ . '/partie-theme.php'; ?>
 <title>Configuration — Administration SEFELEC</title>
 <link rel="stylesheet" href="/assets/css/style.css">
 <link rel="stylesheet" href="admin.css">
@@ -84,5 +85,6 @@ if (!$dejaFait && $_SERVER['REQUEST_METHOD'] === 'POST') {
       </form>
     <?php endif; ?>
   </main>
+<script src="/assets/js/theme.js"></script>
 </body>
 </html>
