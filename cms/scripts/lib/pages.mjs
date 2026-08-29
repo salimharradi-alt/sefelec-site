@@ -251,6 +251,7 @@ ${motsCles ? `<meta name="keywords" content="${echapper(motsCles)}">` : ''}
 <meta name="theme-color" content="#1E3A8A">
 <link rel="icon" href="/assets/images/logo-icon.png" type="image/png">
 <link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/couleurs.css">
 
 ${schemas.map((s) => `<script type="application/ld+json">\n${JSON.stringify(s, null, 2)}\n</script>`).join('\n')}
 </head>

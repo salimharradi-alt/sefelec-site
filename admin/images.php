@@ -16,8 +16,16 @@
 declare(strict_types=1);
 
 /** Formats produits, alignés sur ceux qu'attend le site. */
-const FORMAT_CARTE = ['largeur' => 600, 'hauteur' => 450];
-const FORMAT_GRAND = ['largeur' => 1600, 'hauteur' => 1200];
+/**
+ * Formats produits, par usage. Un logo de partenaire n'a pas les memes
+ * proportions qu'une photo de produit : lui appliquer le meme cadre le
+ * reduirait inutilement.
+ */
+const PRESETS_IMAGE = [
+    'produit'   => ['carte' => [600, 450],  'large' => [1600, 1200]],
+    'logo'      => ['carte' => [400, 200]],
+    'miniature' => ['carte' => [200, 200]],
+];
 
 const TAILLE_MAX_OCTETS = 12 * 1024 * 1024; // 12 Mo
 
@@ -25,7 +33,7 @@ const TAILLE_MAX_OCTETS = 12 * 1024 * 1024; // 12 Mo
  * Traite le fichier reçu et écrit les deux versions.
  * Renvoie ['carte' => chemin, 'large' => chemin] ou ['erreur' => texte].
  */
-function traiterImageProduit(array $fichier): array
+function traiterImageProduit(array $fichier, string $preset = 'produit'): array
 {
     if (($fichier['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) {
         return ['erreur' => "Le téléversement de l'image a échoué."];
@@ -58,9 +66,11 @@ function traiterImageProduit(array $fichier): array
         return ['erreur' => "Le dossier des images est introuvable et n'a pas pu être créé."];
     }
 
+    $formats = PRESETS_IMAGE[$preset] ?? PRESETS_IMAGE['produit'];
+
     $sorties = [];
-    foreach (['carte' => FORMAT_CARTE, 'large' => FORMAT_GRAND] as $nom => $format) {
-        $reduite = reduireDansCadre($source, $format['largeur'], $format['hauteur']);
+    foreach ($formats as $nom => [$largeurMax, $hauteurMax]) {
+        $reduite = reduireDansCadre($source, $largeurMax, $hauteurMax);
         $chemin = $dossier . '/' . $identifiant . '-' . $nom . '.webp';
 
         if (!imagewebp($reduite, $chemin, 82)) {
@@ -117,10 +127,22 @@ function reduireDansCadre($source, int $largeurMax, int $hauteurMax)
  * Efface les fichiers de l'ancienne photo lorsqu'elle est remplacée.
  * Sans cela, le dossier accumulerait des images que plus rien n'affiche.
  */
+/** Efface l'image portee par un champ donne, et son grand format. */
+function supprimerImagesDe(array $element, string $champ): void
+{
+    $cles = $champ === 'image' ? ['image', 'imageLarge'] : [$champ];
+    supprimerFichiersImages($element, $cles);
+}
+
 function supprimerAnciennesImages(array $produit): void
 {
-    foreach (['image', 'imageLarge'] as $cle) {
-        $rel = $produit[$cle] ?? null;
+    supprimerFichiersImages($produit, ['image', 'imageLarge']);
+}
+
+function supprimerFichiersImages(array $element, array $cles): void
+{
+    foreach ($cles as $cle) {
+        $rel = $element[$cle] ?? null;
         if (!$rel) continue;
 
         // Garde-fou : on ne supprime que dans le dossier des images du

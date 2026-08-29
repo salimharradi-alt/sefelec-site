@@ -242,3 +242,88 @@
   resize: vertical;
 }
 .installer-note { font-size: 0.78rem; color: var(--ink-soft); margin: 8px 0 0; }
+
+/* ----- Menu des sections ----- */
+.admin-sections { border-top: 1px solid var(--border); background: var(--paper); }
+.admin-sections-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  gap: 4px;
+  /* Sur téléphone, les onglets défilent latéralement plutôt que de
+     s'empiler sur trois lignes. */
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.admin-onglet {
+  flex: 0 0 auto;
+  padding: 11px 14px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+}
+.admin-onglet:hover { color: var(--heading); }
+.admin-onglet.actif { color: var(--red); border-bottom-color: var(--red); }
+
+/* ----- Formulaire large et sous-titres ----- */
+.admin-form-large { max-width: 100%; }
+.admin-sous-titre {
+  font-size: 1rem;
+  margin: 26px 0 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.admin-sous-titre:first-child { margin-top: 0; }
+
+/* ----- Case à cocher ----- */
+.admin-bascule { display: inline-flex; align-items: center; gap: 9px; font-weight: 600; cursor: pointer; }
+.admin-bascule input { width: 18px; height: 18px; accent-color: var(--red); cursor: pointer; }
+
+/* ----- Sélecteur de couleur ----- */
+.admin-couleur { display: flex; align-items: center; gap: 10px; }
+.admin-couleur input[type="color"] {
+  width: 54px;
+  height: 40px;
+  padding: 2px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--paper);
+  cursor: pointer;
+}
+.admin-couleur-code {
+  width: 110px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--paper-alt);
+  color: var(--ink-soft);
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.85rem;
+}
+
+/* ----- Flèches de réordonnancement ----- */
+.admin-action-fleche { padding: 6px 9px; font-size: 0.95rem; line-height: 1; }
+.admin-action-fleche[disabled] { opacity: 0.3; cursor: default; }
+
+.admin-avertissement {
+  margin: 20px 0 0;
+  padding: 12px 14px;
+  border-left: 3px solid var(--red);
+  background: var(--paper-alt);
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.admin-champ input[type="number"],
+.admin-champ input[type="url"] {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+}
