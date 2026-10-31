@@ -42,7 +42,8 @@ npm-debug.log*
 .idea/
 
 # --- Outils locaux ------------------------------------------
-.claude/
+.claude/*
+!.claude/skills/
 
 # Empreinte du mot de passe de l administration : jamais dans le depot.
 admin/mot-de-passe.php
